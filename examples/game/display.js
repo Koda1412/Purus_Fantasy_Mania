@@ -1,14 +1,5 @@
 
-function display(enemyKill, point, bombNumber, live, currentScene) {
-    let targetKill;
-    if (currentScene = "scene1") {
-        targetKill = 22;
-    } else if (currentScene = "scene2") {
-        targetKill = 20;
-    } else if (currentScene = "scene3") {
-        targetKill = 24;
-    } 
-
+function display(enemyKill, point, bombNumber, live, targetKill) {
     const progressPercentage = (enemyKill / targetKill) * 100;
 
     let display = document.getElementById("display");

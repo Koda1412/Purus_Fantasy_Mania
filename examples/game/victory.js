@@ -1,7 +1,14 @@
 const victory = new Audio("../../assets/audio/victory.mp3");
 
 function gameWin(point, enemyKill) {
-    clearInstruction("display");
+    clearInstruction("display");    
+    clearInstruction("enemyInstruction");
+    clearInstruction("moveInstructionA");
+    clearInstruction("moveInstructionW");
+    clearInstruction("moveInstructionS");
+    clearInstruction("moveInstructionD");
+    clearInstruction("bombInstruction");
+    clearInstruction("obstaclesInstruction");
     clearInstruction("bombAlert");
     theme.pause();
     theme.currentTime = 0;

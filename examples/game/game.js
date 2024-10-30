@@ -2,7 +2,7 @@
 // Initialize variables
 let app;
 // Default game setting
-let currentScene = 'scene1';
+let currentScene;
 let enemyKill = 0;
 let point = 0;
 let bombNumber = 5;
@@ -388,7 +388,14 @@ function initializeGame() {
         let hasSpawnedStrongEnemies = false;
 
         app.on("update", () => {
-            display(enemyKill, point, bombNumber, live, currentScene);
+            // Check display
+            if (currentScene == 'scene1') {
+                display(enemyKill, point, bombNumber, live, 22);
+            } else if (currentScene == 'scene2') {
+                display(enemyKill, point, bombNumber, live, 20);
+            } else if (currentScene == 'scene3') {
+                display(enemyKill, point, bombNumber, live, 24);
+            }
             if (enemyKill % 6 === 0 && !hasSpawnedStrongEnemies) {
                 spawnMultipleEnemies(1, 1, 2);
                 hasSpawnedStrongEnemies = true; 
