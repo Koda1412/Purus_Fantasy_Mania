@@ -582,13 +582,13 @@ function initializeGame() {
             } else if (currentScene == 'scene3') {
                 display(enemyKill, point, bombNumber, live, 24);
             }
-            if (enemyKill >= 8 && !hasSpawnedStrongEnemies) {
+            if (enemyKill == 8 && !hasSpawnedStrongEnemies || enemyKill == 20 && !hasSpawnedStrongEnemies) {
+                hasSpawnedStrongEnemies = true;
                 spawnMultipleEnemies(1, 1, 2);
                 spawnMultipleEnemies(5, 4, 4);
                 spawnMultipleEnemies(3, 2, 1);
                 spawnMultipleEnemies(3, 3, 3);
-                hasSpawnedStrongEnemies = true; 
-            } else if (enemyKill != 8) {
+            } else if (enemyKill != 8 && enemyKill != 20 ) {
                 hasSpawnedStrongEnemies = false;
             }
             // Check bomb alert
