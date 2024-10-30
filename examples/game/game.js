@@ -403,14 +403,6 @@ function initializeGame() {
                 
                 hasSpawnedStrongEnemies = false;
             }
-            // Check winning condition
-            if (currentScene == 'scene1' && enemyKill == 22) {
-                gameWin(point, enemyKill);
-            } else if (currentScene == 'scene2' && enemyKill == 20) {
-                gameWin(point, enemyKill);
-            } else if (currentScene == 'scene3' && enemyKill == 24) {
-                gameWin(point, enemyKill);
-            }
             // Check bomb alert
             if ( bombNumber <= 2) {
                 bombAlert()

@@ -69,5 +69,13 @@ function checkDestroyEnemy(enemies, bombPosition, blastRadius) {
             point += 50;
             enemyKill += 1;
         }
+        // Check winning condition
+        if (currentScene == 'scene1' && enemyKill == 22) {
+            gameWin(point, enemyKill);
+        } else if (currentScene == 'scene2' && enemyKill == 20) {
+            gameWin(point, enemyKill);
+        } else if (currentScene == 'scene3' && enemyKill == 24) {
+            gameWin(point, enemyKill);
+        }
     }
 }
