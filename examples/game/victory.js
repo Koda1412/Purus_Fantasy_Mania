@@ -2,6 +2,7 @@ const victory = new Audio("../../assets/audio/victory.mp3");
 
 function gameWin(point, enemyKill) {
     clearInstruction("display");
+    clearInstruction("bombAlert");
     theme.pause();
     theme.currentTime = 0;
     app.off("update");
