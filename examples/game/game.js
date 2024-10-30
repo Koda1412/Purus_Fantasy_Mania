@@ -388,7 +388,7 @@ function initializeGame() {
         let hasSpawnedStrongEnemies = false;
 
         app.on("update", () => {
-            display(enemyKill, point, bombNumber, live);
+            display(enemyKill, point, bombNumber, live, currentScene);
             if (enemyKill % 6 === 0 && !hasSpawnedStrongEnemies) {
                 spawnMultipleEnemies(1, 1, 2);
                 hasSpawnedStrongEnemies = true; 

@@ -1,5 +1,5 @@
 
-function display(enemyKill, point, bombNumber, live) {
+function display(enemyKill, point, bombNumber, live, currentScene) {
     let targetKill;
     if (currentScene = "scene1") {
         targetKill = 22;
