@@ -4,9 +4,13 @@ const over = new Audio("../../assets/audio/lose.mp3");
 function gameOver(enemyKill, point) {
     clearInstruction("display");    
     clearInstruction("enemyInstruction");
-    clearInstruction("moveInstruction");
+    clearInstruction("moveInstructionA");
+    clearInstruction("moveInstructionW");
+    clearInstruction("moveInstructionS");
+    clearInstruction("moveInstructionD");
     clearInstruction("bombInstruction");
     clearInstruction("obstaclesInstruction");
+    clearInstruction("bombAlert");
     theme.pause();
     theme.currentTime = 0;
     app.off("update");

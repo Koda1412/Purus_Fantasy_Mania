@@ -404,6 +404,12 @@ function initializeGame() {
             } else if (currentScene == 'scene3' && enemyKill == 24) {
                 gameWin(point, enemyKill);
             }
+            // Check bomb alert
+            if ( bombNumber <= 2) {
+                bombAlert()
+            } else if ( bombNumber > 2) {
+                clearInstruction("bombAlert");
+            }
         });
 
         moveInstructionD();
@@ -429,6 +435,7 @@ function initializeGame() {
             }
             
         };
+
 
         if (currentScene == 'scene1') {
         createRandomObstacles(200, 100, 20, 30, 19);

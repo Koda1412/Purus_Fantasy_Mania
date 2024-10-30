@@ -60,6 +60,26 @@ function display(enemyKill, point, bombNumber, live, currentScene) {
     }
 }
 
+function bombAlert() {
+    let bombAlert = document.getElementById("display");
+    bombAlert = document.createElement("div");
+    bombAlert.id = "bombAlert";
+    bombAlert.style.position = "absolute";
+    bombAlert.style.top = "10%";
+    bombAlert.style.left = "50%";
+    bombAlert.style.fontFamily = "fantasy";
+    bombAlert.style.fontSize = "15px";
+    bombAlert.style.color = "white";
+    bombAlert.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    bombAlert.style.padding = "10px"; 
+    bombAlert.style.borderRadius = "10px";
+    bombAlert.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    bombAlert.style.backgroundSize = "cover";
+    bombAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(bombAlert);
+    bombAlert.innerHTML = `ATTENTION!! OUT OF BOMB`;
+}
+
 
 function enemyInstruction() {
     let enemyInstruction = document.getElementById("display");
