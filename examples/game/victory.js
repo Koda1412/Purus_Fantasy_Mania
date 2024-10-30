@@ -10,6 +10,8 @@ function gameWin(point, enemyKill) {
     clearInstruction("bombInstruction");
     clearInstruction("obstaclesInstruction");
     clearInstruction("bombAlert");
+    clearInstruction("displayBoss");
+    clearInstruction("bossInstruction");
     theme.pause();
     theme.currentTime = 0;
     app.off("update");

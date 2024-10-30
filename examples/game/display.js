@@ -51,6 +51,60 @@ function display(enemyKill, point, bombNumber, live, targetKill) {
     }
 }
 
+
+function displayBoss(bossLive) {
+    const progressBossPercentage = (bossLive / 8) * 100;
+
+    let displayBoss = document.getElementById("displayBoss");
+    if (!displayBoss) {
+        displayBoss = document.createElement("div");
+        displayBoss.id = "displayBoss";
+        displayBoss.style.position = "absolute";
+        displayBoss.style.top = "2%";
+        displayBoss.style.left = "86.5%";
+        displayBoss.style.fontFamily = "fantasy";
+        displayBoss.style.fontSize = "20px";
+        displayBoss.style.color = "white";
+        displayBoss.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+        displayBoss.style.backgroundImage = "url('../../assets/image/bossDisplay.jpg')";
+        displayBoss.style.backgroundSize = "cover";
+        displayBoss.style.padding = "10px";
+        displayBoss.style.borderRadius = "10px";
+        displayBoss.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+        document.body.appendChild(displayBoss);
+
+        const infoBossText = document.createElement("div");
+        infoBossText.id = "infoBossText";
+        displayBoss.appendChild(infoBossText);
+
+        const statusBarBossContainer = document.createElement("div");
+        statusBarBossContainer.style.width = "100%";
+        statusBarBossContainer.style.height = "20px";
+        statusBarBossContainer.style.backgroundColor = "#444";
+        statusBarBossContainer.style.borderRadius = "5px";
+        statusBarBossContainer.style.marginTop = "10px";
+
+        const statusBarBossFill = document.createElement("div");
+        statusBarBossFill.id = "statusBarBossFill";
+        statusBarBossFill.style.height = "100%";
+        statusBarBossFill.style.width = "0%";
+        statusBarBossFill.style.backgroundColor = "red";
+        statusBarBossFill.style.borderRadius = "5px";
+
+        statusBarBossContainer.appendChild(statusBarBossFill);
+        displayBoss.appendChild(statusBarBossContainer);
+    }
+
+    const infoBossText = document.getElementById("infoBossText");
+    infoBossText.innerHTML = `Stage's Boss HP`;
+    
+    const statusBarBossFill = document.getElementById("statusBarBossFill");
+    if (statusBarBossFill) {
+        statusBarBossFill.style.width = `${progressBossPercentage}%`;
+    }
+}
+
+
 function bombAlert() {
     let bombAlert = document.getElementById("bombAlert");
     if (!bombAlert) {
@@ -91,7 +145,7 @@ function enemyInstruction() {
     enemyInstruction.style.backgroundSize = "cover";
     enemyInstruction.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
     document.body.appendChild(enemyInstruction);
-    enemyInstruction.innerHTML = `Avoid enemy bomb and bomb them to fill<br>the status bar to achieve vicory`;
+    enemyInstruction.innerHTML = `Avoid enemy bomb and bomb them to fill<br>the status bar to call the stage's boss`;
 }
 
 function moveInstructionA() {
@@ -213,6 +267,26 @@ function bombInstruction() {
     bombInstruction.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
     document.body.appendChild(bombInstruction);
     bombInstruction.innerHTML = `Press Space to drop bomb`;
+}
+
+function bossInstruction() {
+    let bossInstruction = document.getElementById("bossInstruction");
+    bossInstruction = document.createElement("div");
+    bossInstruction.id = "bombInstruction";
+    bossInstruction.style.position = "absolute";
+    bossInstruction.style.top = "55%";
+    bossInstruction.style.left = "38%";
+    bossInstruction.style.fontFamily = "fantasy";
+    bossInstruction.style.fontSize = "20px";
+    bossInstruction.style.color = "white";
+    bossInstruction.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    bossInstruction.style.padding = "10px"; 
+    bossInstruction.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    bossInstruction.style.backgroundSize = "cover";
+    bossInstruction.style.borderRadius = "10px";
+    bossInstruction.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(bossInstruction);
+    bossInstruction.innerHTML = `Drop bomb to kill the boss and win the stage`;
 }
 
 function clearInstruction(ins) {

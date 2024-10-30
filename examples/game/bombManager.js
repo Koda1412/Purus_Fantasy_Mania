@@ -69,13 +69,27 @@ function checkDestroyEnemy(enemies, bombPosition, blastRadius) {
             point += 50;
             enemyKill += 1;
         }
-        // Check winning condition
-        if (currentScene == 'scene1' && enemyKill == 22) {
+    }
+}
+
+function checkDestroyBoss(bosses, bombPosition, blastRadius) {
+    for (let i = bosses.length - 1; i >= 0; i--) {
+        const boss = bosses[i];
+        const bossPosition = boss.getPosition();
+        const distance = bombPosition.distance(bossPosition);
+
+        if (distance <= blastRadius) {
+            bossLive -= 1;
+        }
+
+        if (bossLive == 0) {
+            boss.destroy();
+            bosses.splice(i, 1);
+            clearInterval(boss.enemyBombInterval);
+            console.log("Destroyed boss at", bossPosition);
+            point += 100;
             gameWin(point, enemyKill);
-        } else if (currentScene == 'scene2' && enemyKill == 20) {
-            gameWin(point, enemyKill);
-        } else if (currentScene == 'scene3' && enemyKill == 24) {
-            gameWin(point, enemyKill);
+            break;
         }
     }
 }

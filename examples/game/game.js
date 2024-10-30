@@ -7,6 +7,7 @@ let enemyKill = 0;
 let point = 0;
 let bombNumber = 5;
 let live = 2;
+let bossLive = 8;
 
 const theme = new Audio("../../assets/audio/themes.mp3");
 
@@ -167,8 +168,10 @@ function initializeGame() {
         const bombs = [];
         const obstacles = [];
         const enemies = []; 
-
+        const bosses = []; 
         
+        // -------------------------------- ENEMY GENERATION -------------------------------------//
+
         let canCreateBomb = true;
         const bombSound = new Audio("../../assets/audio/drop_bomb.mp3");
         document.body.addEventListener("keydown", (event) => {
@@ -178,8 +181,9 @@ function initializeGame() {
                 setTimeout(() => {
                     characterEntity.animation?.play(assets.charRunAnimationAsset.name);
                 }, 400);
-                createBomb(bombs, characterEntity, obstacles, enemies); 
+                createBomb(bombs, characterEntity, obstacles, enemies, bosses); 
                 clearInstruction("bombInstruction");
+                clearInstruction("bossInstruction");
                 canCreateBomb = false; 
                 setTimeout(() => {
                     canCreateBomb = true; 
@@ -209,10 +213,10 @@ function initializeGame() {
                     asset: assets.enemy3ModelAsset 
                 });
                 break;
-                default:
+                case 4:
                 enemyEntity.addComponent("model", {
                     type: "asset",
-                    asset: assets.enemyModelAsset 
+                    asset: assets.enemy4ModelAsset 
                 });
                 break;
             }
@@ -253,7 +257,7 @@ function initializeGame() {
                 movingForward = !movingForward;
             };
 
-            if (type === 2 || type === 3) {
+            if (type === 2 || type === 3 || type === 4 || type === 5 ) {
                 const randomToggleTime = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
                 setInterval(toggleDirection, randomToggleTime);
             }
@@ -357,6 +361,14 @@ function initializeGame() {
                         const moveDirection = movingForward ? 1 : -1;
                         enemyEntity.setPosition(enemyPos.x + moveDirection * enemySpeed * dt, enemyPos.y, enemyPos.z);
                         enemyEntity.setEulerAngles(0, movingForward ? 90 : -90, 0); 
+                    } else if (canMove && type === 4) {
+                        const moveDirection = movingForward ? 1 : -1;
+                        enemyEntity.setPosition(
+                            enemyPos.x + moveDirection * (enemySpeed * Math.cos(Math.PI / 4)) * dt,
+                            enemyPos.y,
+                            enemyPos.z + moveDirection * (enemySpeed * Math.sin(Math.PI / 4)) * dt
+                        );
+                        enemyEntity.setEulerAngles(0, movingForward ? 45 : 225, 0);
                     }
                     const pos = enemyEntity.getPosition();
                     pos.x = pc.math.clamp(pos.x, -boundaryX, boundaryX);
@@ -366,6 +378,8 @@ function initializeGame() {
             });
         };
         
+        // -------------------------------- END OF ENEMY GENERATION -------------------------------------//
+
         const spawnMultipleEnemies = (enemyNumber, type, texture) => {
             for (let i = 0; i < enemyNumber; i++) {
                 createEnemy(type, texture);
@@ -374,20 +388,192 @@ function initializeGame() {
         };
 
         if(currentScene == 'scene1' ){
-            spawnMultipleEnemies(10, 2, 1);
-            spawnMultipleEnemies(12, 3, 3);
+            spawnMultipleEnemies(6, 2, 1);
+            spawnMultipleEnemies(6, 3, 3);
         } else if(currentScene == 'scene2' ){
-            spawnMultipleEnemies(10, 2, 1);
-            spawnMultipleEnemies(10, 3, 3);
+            spawnMultipleEnemies(5, 2, 1);
+            spawnMultipleEnemies(5, 3, 3);
         } else if(currentScene == 'scene3' ){
-            spawnMultipleEnemies(12, 2, 1);
-            spawnMultipleEnemies(12, 3, 3);
+            spawnMultipleEnemies(7, 2, 1);
+            spawnMultipleEnemies(7, 3, 3);
         }
+
+        // -------------------------------- BOSS GENERATION -------------------------------------//
+        const createBoss = () => {
+            const bossEntity = new pc.Entity("Boss");
+            let bossModel;
+            if (currentScene == "scene1") {
+                bossModel = assets.boss1ModelAsset
+            } else if (currentScene == "scene2") {
+                bossModel = assets.boss2ModelAsset
+            } else if (currentScene == "scene3") {
+                bossModel = assets.boss3ModelAsset
+            }
+            bossEntity.addComponent("model", {
+                type: "asset",
+                asset: bossModel 
+            });
+               
+            bossEntity.setLocalScale(8, 8, 8);
+            bossEntity.setPosition(Math.random() * 200 - 100, 1, Math.random() * 100 - 50); 
+            app.root.addChild(bossEntity);
+            bossEntity.addComponent("animation", {
+                assets: [assets.charRun2AnimationAsset, assets.charAttackAnimationAsset],
+            });
+            
+        
+            bossEntity.addComponent("collision", {
+                type: "capsule",
+                radius: 4,
+                height: 8
+            });
+        
+            bossEntity.addComponent("rigidbody", {
+                type: "dynamic",
+                mass: 1,
+            });
+        
+            bossEntity.rigidbody.syncEntityToBody();
+            startBossBehavior(bossEntity);
+            bosses.push(bossEntity);
+        };
+        
+        
+        const startBossBehavior = (bossEntity) => {
+            const bossSpeed = 5;
+            bossEntity.animation?.play(assets.charRun2AnimationAsset.name);
+        
+            const dropBomb = () => {
+                const bossBomb = new pc.Entity("BossBomb");
+                let chosenBombModel;
+                if (currentScene == "scene1") {
+                    chosenBombModel = assets.boss1BombModelAsset
+                } else if (currentScene == "scene2") {
+                    chosenBombModel = assets.boss2BombModelAsset
+                } else if (currentScene == "scene3") {
+                    chosenBombModel = assets.boss3BombModelAsset
+                }
+                bossBomb.addComponent("model", {
+                    type: "asset",
+                    asset: chosenBombModel
+                });
+                if (currentScene == "scene1") {
+                    bossBomb.setLocalScale(150, 150, 150);
+                    bossBomb.setPosition(bossEntity.getPosition().x, 0, bossEntity.getPosition().z);
+                } else if (currentScene == "scene2") {
+                    bossBomb.setLocalScale(0.02, 0.02, 0.02);
+                    bossBomb.setPosition(bossEntity.getPosition().x, 2, bossEntity.getPosition().z);
+                } else if (currentScene == "scene3") {
+                    bossBomb.setLocalScale(20, 20, 20);
+                    bossBomb.setPosition(bossEntity.getPosition().x, 2, bossEntity.getPosition().z);
+                } 
+                app.root.addChild(bossBomb);
+        
+                setTimeout(() => {
+                    console.log("Boss Bomb exploded at", bossBomb.getPosition());
+        
+                    const bossBombArea = new pc.Entity("BossBombArea");
+                    bossBombArea.addComponent("model", {
+                        type: "asset",
+                        asset: assets.explosionBombModelAsset
+                    });
+                    bossBombArea.setLocalScale(80, 80, 80);
+                    bossBombArea.setPosition(bossBomb.getPosition().x, 0, bossBomb.getPosition().z);
+                    app.root.addChild(bossBombArea);
+        
+                    let scaleDuration = 200;
+                    let scaleSteps = 15;
+                    let scaleStepTime = scaleDuration / scaleSteps;
+                    let currentScale = 1.5;
+                    let targetScale = 2;
+        
+                    const animateScale = () => {
+                        if (currentScale < targetScale) {
+                            currentScale += (targetScale - 1.5) / scaleSteps; 
+                            bossBombArea.setLocalScale(currentScale, currentScale, currentScale);
+                            setTimeout(animateScale, scaleStepTime);
+                        }
+                    };
+        
+                    animateScale(); 
+        
+                    setTimeout(() => {
+                        bossBombArea.destroy();
+                    }, 500); 
+        
+                    checkEnemyForDestruction(obstacles, bossBomb.getPosition(), 15); 
+                    checkDestroyCharacter(characters, bossBomb.getPosition(), 20);
+                    bossBomb.destroy();
+                }, 5000);
+            };
+        
+            const dropBombWithAnimation = () => {
+                bossEntity.animation?.play(assets.charAttackAnimationAsset.name);
+                dropBomb();
+                
+                setTimeout(() => {
+                    bossEntity.animation?.play(assets.charRun2AnimationAsset.name);
+                }, 1500);
+            }
+            
+            bossEntity.enemyBombInterval = setInterval(function() {
+                dropBombWithAnimation();
+                clearInterval(bossEntity.enemyBombInterval);
+                let randomTime = Math.floor(Math.random() * (6000 - 4000 + 1)) + 4000;
+                bossEntity.enemyBombInterval = setInterval(arguments.callee, randomTime);
+            }, Math.floor(Math.random() * (6000 - 4000 + 1)) + 4000);
+        
+            app.on("update", (dt) => {
+                if (bossEntity) {
+                    const playerPos = characterEntity.getPosition();
+                    const enemyPos = bossEntity.getPosition();
+                    const direction = playerPos.clone().sub(enemyPos).normalize();
+        
+                    const velocity = new pc.Vec3(direction.x * bossSpeed, 0, direction.z * bossSpeed);
+                    const targetPosition = new pc.Vec3(enemyPos.x + velocity.x * dt, enemyPos.y, enemyPos.z + velocity.z * dt);
+                    let canMove = true;
+        
+                    obstacles.forEach(obstacle => {
+                        if (obstacle.enabled) { 
+                            const obstaclePosition = obstacle.getPosition();
+                            const distance = targetPosition.distance(obstaclePosition);
+        
+                            if (distance < 4) {
+                                canMove = false; 
+                            }
+                        }
+                    });
+        
+                    const angle = Math.atan2(direction.x, direction.z) * pc.math.RAD_TO_DEG;
+        
+                    if (canMove) {
+                        bossEntity.setPosition(enemyPos.x + velocity.x * dt, enemyPos.y, enemyPos.z + velocity.z * dt);
+                        bossEntity.setEulerAngles(0, angle, 0);
+                    }
+                    const pos = bossEntity.getPosition();
+                    pos.x = pc.math.clamp(pos.x, -boundaryX, boundaryX);
+                    pos.z = pc.math.clamp(pos.z, -boundaryZ, boundaryZ);
+                    bossEntity.setPosition(pos);
+                }
+            });
+        };
+        
+        const spawnMultipleBosses = (bossNumber) => {
+            for (let i = 0; i < bossNumber; i++) {
+                createBoss();
+            }
+        
+        };
+        // --------------------------  END OF BOSS GENERATION ------------------------------------//
 
         // Set flag for spawn strong enemy
         let hasSpawnedStrongEnemies = false;
+        let hasSpawnedBoss = false;
 
         app.on("update", () => {
+            if (hasSpawnedBoss) {
+                displayBoss(bossLive);
+            }
             // Check display
             if (currentScene == 'scene1') {
                 display(enemyKill, point, bombNumber, live, 22);
@@ -396,11 +582,13 @@ function initializeGame() {
             } else if (currentScene == 'scene3') {
                 display(enemyKill, point, bombNumber, live, 24);
             }
-            if (enemyKill % 6 === 0 && !hasSpawnedStrongEnemies) {
+            if (enemyKill >= 8 && !hasSpawnedStrongEnemies) {
                 spawnMultipleEnemies(1, 1, 2);
+                spawnMultipleEnemies(5, 4, 4);
+                spawnMultipleEnemies(3, 2, 1);
+                spawnMultipleEnemies(3, 3, 3);
                 hasSpawnedStrongEnemies = true; 
-            } else if (enemyKill % 6 !== 0) {
-                
+            } else if (enemyKill !== 8) {
                 hasSpawnedStrongEnemies = false;
             }
             // Check bomb alert
@@ -408,6 +596,20 @@ function initializeGame() {
                 bombAlert()
             } else if ( bombNumber > 2) {
                 clearInstruction("bombAlert");
+            }
+            //Check spawn boss
+            if (currentScene == 'scene1' && enemyKill >= 22 && !hasSpawnedBoss) {
+                hasSpawnedBoss = true;
+                spawnMultipleBosses(1);
+                bossInstruction();
+            } else if (currentScene == 'scene2' && enemyKill >= 20 && !hasSpawnedBoss) {
+                hasSpawnedBoss = true;
+                spawnMultipleBosses(1);
+                bossInstruction();
+            } else if (currentScene == 'scene3' && enemyKill >= 24 && !hasSpawnedBoss) {
+                hasSpawnedBoss = true;
+                spawnMultipleBosses(1);
+                bossInstruction();
             }
         });
 

@@ -13,6 +13,13 @@ const assets = {
     enemy3ModelAsset: new pc.Asset("model_enemy_3", "model", { url: "../../assets/models/Knight.glb" }),
     enemy3TextureAsset: new pc.Asset("tex_enemy_3", "texture", { url: "../../assets/textures/knight_texture.png" }),
    
+    enemy4ModelAsset: new pc.Asset("model_enemy_4", "model", { url: "../../assets/models/boss/Skeleton_Minion.glb" }),
+    
+    boss1ModelAsset: new pc.Asset("model_boss_1", "model", { url: "../../assets/models/boss/Skeleton_Rogue.glb" }),
+    boss2ModelAsset: new pc.Asset("model_boss_2", "model", { url: "../../assets/models/boss/Skeleton_Mage.glb" }),
+    boss3ModelAsset: new pc.Asset("model_boss_3", "model", { url: "../../assets/models/boss/Skeleton_Warrior.glb" }),
+    bossTextureAsset: new pc.Asset("tex_boss", "texture", { url: "../../assets/textures/skeleton_texture.png" }),
+   
 
     planeTextureAsset: new pc.Asset("plane_tex", "texture", { url: "../../assets/textures/grass.jpg" }),
     dirtTextureAsset: new pc.Asset("dirt_tex", "texture", { url: "../../assets/textures/sand.jpg" }),
@@ -20,6 +27,10 @@ const assets = {
     
     bombModelAsset: new pc.Asset("bomb_model", "model", { url: "../../assets/models/cartoon_bomb.glb" }),
     enemyBombModelAsset: new pc.Asset("enemy_bomb_model", "model", { url: "../../assets/models/bomb.glb" }),
+    boss1BombModelAsset: new pc.Asset("boss_bomb_model", "model", { url: "../../assets/models/razor_Bomb.glb" }),
+    boss2BombModelAsset: new pc.Asset("boss_bomb_mode2", "model", { url: "../../assets/models/wood_Bomb.glb" }),
+    boss3BombModelAsset: new pc.Asset("boss_bomb_mode3", "model", { url: "../../assets/models/ice_Bomb.glb" }),
+
 
     explosionBombModelAsset: new pc.Asset("explosion_bomb_model", "model", { url: "../../assets/models/explosion.glb" }),
     explosionEnemyBombModelAsset: new pc.Asset("explosion_bomb_model", "model", { url: "../../assets/models/enemy_explosion.glb" }),

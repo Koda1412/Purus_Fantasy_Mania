@@ -1,5 +1,5 @@
 
-function createBomb(bombs, characterEntity, obstacles, enemies) {
+function createBomb(bombs, characterEntity, obstacles, enemies, bosses) {
     const explosion = new Audio("../../assets/audio/explosion.mp3");
     const bomb = new pc.Entity("Bomb");
     bomb.addComponent("model", {
@@ -45,8 +45,9 @@ function createBomb(bombs, characterEntity, obstacles, enemies) {
             bombArea.destroy();
         }, 200); 
         explosion.play();
+        bomb.destroy();
         checkForDestruction(obstacles, bomb.getPosition(), 10);
         checkDestroyEnemy(enemies, bomb.getPosition(), 5); 
-        bomb.destroy();
+        checkDestroyBoss(bosses, bomb.getPosition(), 10);
     }, 2000); 
 };
