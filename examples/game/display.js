@@ -1,5 +1,5 @@
 
-function display(enemyKill, point, bombNumber, live, currentScene) {
+function display(enemyKill, point, bombNumber, live) {
     let targetKill;
     if (currentScene = "scene1") {
         targetKill = 22;
@@ -19,7 +19,7 @@ function display(enemyKill, point, bombNumber, live, currentScene) {
         display.style.top = "2%";
         display.style.left = "2%";
         display.style.fontFamily = "fantasy";
-        display.style.fontSize = "25px";
+        display.style.fontSize = "20px";
         display.style.color = "white";
         display.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
         display.style.backgroundImage = "url('../../assets/image/display.jpg')";
@@ -61,14 +61,15 @@ function display(enemyKill, point, bombNumber, live, currentScene) {
 }
 
 function bombAlert() {
-    let bombAlert = document.getElementById("display");
+    let bombAlert = document.getElementById("bombAlert");
+    if (!bombAlert) {
     bombAlert = document.createElement("div");
     bombAlert.id = "bombAlert";
     bombAlert.style.position = "absolute";
-    bombAlert.style.top = "10%";
-    bombAlert.style.left = "50%";
+    bombAlert.style.top = "30%";
+    bombAlert.style.left = "42%";
     bombAlert.style.fontFamily = "fantasy";
-    bombAlert.style.fontSize = "15px";
+    bombAlert.style.fontSize = "20px";
     bombAlert.style.color = "white";
     bombAlert.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
     bombAlert.style.padding = "10px"; 
@@ -77,12 +78,13 @@ function bombAlert() {
     bombAlert.style.backgroundSize = "cover";
     bombAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
     document.body.appendChild(bombAlert);
-    bombAlert.innerHTML = `ATTENTION!! OUT OF BOMB`;
+    bombAlert.innerHTML = `ATTENTION!! OUT OF BOMB<br> Bomb obstacles to get more`;  
+    }
 }
 
 
 function enemyInstruction() {
-    let enemyInstruction = document.getElementById("display");
+    let enemyInstruction = document.getElementById("enemyInstruction");
     enemyInstruction = document.createElement("div");
     enemyInstruction.id = "enemyInstruction";
     enemyInstruction.style.position = "absolute";
@@ -98,11 +100,11 @@ function enemyInstruction() {
     enemyInstruction.style.backgroundSize = "cover";
     enemyInstruction.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
     document.body.appendChild(enemyInstruction);
-    enemyInstruction.innerHTML = `Avoid enemy bomb and bomb them to fill the status bar to achieve vicory`;
+    enemyInstruction.innerHTML = `Avoid enemy bomb and bomb them to fill<br>the status bar to achieve vicory`;
 }
 
 function moveInstructionA() {
-    let moveInstruction = document.getElementById("display");
+    let moveInstruction = document.getElementById("moveInstructionA");
     moveInstruction = document.createElement("div");
     moveInstruction.id = "moveInstructionA";
     moveInstruction.style.position = "absolute";
@@ -122,7 +124,7 @@ function moveInstructionA() {
 }
 
 function moveInstructionW() {
-    let moveInstruction = document.getElementById("display");
+    let moveInstruction = document.getElementById("moveInstructionW");
     moveInstruction = document.createElement("div");
     moveInstruction.id = "moveInstructionW";
     moveInstruction.style.position = "absolute";
@@ -142,7 +144,7 @@ function moveInstructionW() {
 }
 
 function moveInstructionS() {
-    let moveInstruction = document.getElementById("display");
+    let moveInstruction = document.getElementById("moveInstructionS");
     moveInstruction = document.createElement("div");
     moveInstruction.id = "moveInstructionS";
     moveInstruction.style.position = "absolute";
@@ -162,7 +164,7 @@ function moveInstructionS() {
 }
 
 function moveInstructionD() {
-    let moveInstruction = document.getElementById("display");
+    let moveInstruction = document.getElementById("moveInstructionD");
     moveInstruction = document.createElement("div");
     moveInstruction.id = "moveInstructionD";
     moveInstruction.style.position = "absolute";
@@ -182,7 +184,7 @@ function moveInstructionD() {
 }
 
 function obstaclesInstruction() {
-    let obstaclesInstruction = document.getElementById("display");
+    let obstaclesInstruction = document.getElementById("obstaclesInstruction");
     obstaclesInstruction = document.createElement("div");
     obstaclesInstruction.id = "obstaclesInstruction";
     obstaclesInstruction.style.position = "absolute";
@@ -203,7 +205,7 @@ function obstaclesInstruction() {
 
 
 function bombInstruction() {
-    let bombInstruction = document.getElementById("display");
+    let bombInstruction = document.getElementById("bombInstruction");
     bombInstruction = document.createElement("div");
     bombInstruction.id = "bombInstruction";
     bombInstruction.style.position = "absolute";
