@@ -588,7 +588,7 @@ function initializeGame() {
                 spawnMultipleEnemies(3, 2, 1);
                 spawnMultipleEnemies(3, 3, 3);
                 hasSpawnedStrongEnemies = true; 
-            } else if (enemyKill !== 8) {
+            } else if (enemyKill != 8) {
                 hasSpawnedStrongEnemies = false;
             }
             // Check bomb alert
