@@ -1,7 +1,9 @@
 
 function display(enemyKill, point, bombNumber, live, targetKill) {
-    const progressPercentage = (enemyKill / targetKill) * 100;
-
+    let progressPercentage = (enemyKill / targetKill) * 100;
+    if (progressPercentage > 100) {
+        progressPercentage = 100; 
+    }
     let display = document.getElementById("display");
     if (!display) {
         display = document.createElement("div");
