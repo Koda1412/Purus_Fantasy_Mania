@@ -26,10 +26,10 @@ const assets = {
     winterTextureAsset: new pc.Asset("winter_tex", "texture", { url: "../../assets/textures/snow.jpg" }),
     
     bombModelAsset: new pc.Asset("bomb_model", "model", { url: "../../assets/models/cartoon_bomb.glb" }),
-    enemyBombModelAsset: new pc.Asset("enemy_bomb_model", "model", { url: "../../assets/models/bomb.glb" }),
-    boss1BombModelAsset: new pc.Asset("boss_bomb_model", "model", { url: "../../assets/models/razor_Bomb.glb" }),
-    boss2BombModelAsset: new pc.Asset("boss_bomb_mode2", "model", { url: "../../assets/models/wood_Bomb.glb" }),
-    boss3BombModelAsset: new pc.Asset("boss_bomb_mode3", "model", { url: "../../assets/models/ice_Bomb.glb" }),
+    enemyBombModelAsset: new pc.Asset("enemy_bomb_model", "model", { url: "../../assets/models/enemy_Bomb.glb" }),
+    boss1BombModelAsset: new pc.Asset("boss_bomb_model", "model", { url: "../../assets/models/boss_Bomb_Desert.glb" }),
+    boss2BombModelAsset: new pc.Asset("boss_bomb_mode2", "model", { url: "../../assets/models/boss_Bomb_Mage.glb" }),
+    boss3BombModelAsset: new pc.Asset("boss_bomb_mode3", "model", { url: "../../assets/models/boss_Bomb_Ice.glb" }),
 
 
     explosionBombModelAsset: new pc.Asset("explosion_bomb_model", "model", { url: "../../assets/models/explosion.glb" }),

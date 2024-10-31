@@ -267,7 +267,7 @@ function initializeGame() {
                     type: "asset",
                     asset: assets.enemyBombModelAsset
                 });
-                enemyBomb.setLocalScale(0.04, 0.04, 0.04);
+                enemyBomb.setLocalScale(125, 125, 125);
                 enemyBomb.setPosition(enemyEntity.getPosition().x, 1, enemyEntity.getPosition().z);
                 app.root.addChild(enemyBomb);
 
@@ -458,14 +458,14 @@ function initializeGame() {
                     asset: chosenBombModel
                 });
                 if (currentScene == "scene1") {
-                    bossBomb.setLocalScale(150, 150, 150);
-                    bossBomb.setPosition(bossEntity.getPosition().x, 0, bossEntity.getPosition().z);
+                    bossBomb.setLocalScale(0.1, 0.1, 0.1);
+                    bossBomb.setPosition(bossEntity.getPosition().x, 2, bossEntity.getPosition().z);
                 } else if (currentScene == "scene2") {
-                    bossBomb.setLocalScale(0.02, 0.02, 0.02);
-                    bossBomb.setPosition(bossEntity.getPosition().x, 2, bossEntity.getPosition().z);
+                    bossBomb.setLocalScale(0.25, 0.25, 0.25);
+                    bossBomb.setPosition(bossEntity.getPosition().x, 0, bossEntity.getPosition().z);
                 } else if (currentScene == "scene3") {
-                    bossBomb.setLocalScale(20, 20, 20);
-                    bossBomb.setPosition(bossEntity.getPosition().x, 2, bossEntity.getPosition().z);
+                    bossBomb.setLocalScale(10, 10, 10);
+                    bossBomb.setPosition(bossEntity.getPosition().x, 2.5, bossEntity.getPosition().z);
                 } 
                 app.root.addChild(bossBomb);
         
@@ -504,7 +504,7 @@ function initializeGame() {
                     checkEnemyForDestruction(obstacles, bossBomb.getPosition(), 15); 
                     checkDestroyCharacter(characters, bossBomb.getPosition(), 20);
                     bossBomb.destroy();
-                }, 5000);
+                }, 2000);
             };
         
             const dropBombWithAnimation = () => {

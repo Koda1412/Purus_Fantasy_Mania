@@ -14,7 +14,7 @@ function cameraSetup(cameraEntity, scene) {
     } else if (scene === 'scene2') {
         value = 4;
     } else if (scene === 'scene3') {
-        value = 2;
+        value = 1.75;
     }
 
     // Add directional light with shadows
