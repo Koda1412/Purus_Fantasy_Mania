@@ -1,5 +1,4 @@
-# PlayCanvas Game - Purus Games Internship - Fantasy Mania
-
+# PlayCanvas Examples - Purus Games
 
 ### Install npm dependencies
 ```npm ci```
