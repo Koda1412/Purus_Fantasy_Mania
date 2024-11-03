@@ -31,6 +31,8 @@ const assets = {
     boss2BombModelAsset: new pc.Asset("boss_bomb_mode2", "model", { url: "../../assets/models/boss_Bomb_Mage.glb" }),
     boss3BombModelAsset: new pc.Asset("boss_bomb_mode3", "model", { url: "../../assets/models/boss_Bomb_Ice.glb" }),
 
+    boostModelAsset: new pc.Asset("boost_model", "model", { url: "../../assets/models/boost.glb" }),
+    liveModelAsset: new pc.Asset("live_model", "model", { url: "../../assets/models/live.glb" }),
 
     explosionBombModelAsset: new pc.Asset("explosion_bomb_model", "model", { url: "../../assets/models/explosion.glb" }),
     explosionEnemyBombModelAsset: new pc.Asset("explosion_bomb_model", "model", { url: "../../assets/models/enemy_explosion.glb" }),

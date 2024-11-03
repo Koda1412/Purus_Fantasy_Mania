@@ -2,7 +2,7 @@
 
 const mainS = new Audio("../../assets/audio/main.mp3");
 
-function checkForDestruction(obstacles, bombPosition, blastRadius) {
+function checkForDestruction(obstacles, bombPosition, blastRadius, items) {
     for (let i = obstacles.length - 1; i >= 0; i--) {
         const obstacle = obstacles[i];
         const obstaclePosition = obstacle.getPosition();
@@ -13,8 +13,55 @@ function checkForDestruction(obstacles, bombPosition, blastRadius) {
             obstacles.splice(i, 1);
             clearInstruction("obstaclesInstruction");
             console.log("Destroyed obstacle at", obstaclePosition);
+            
+            let t = 1; 
+            if (Math.random() <= 0.2) { 
+                t = 2;
+            }
+            
+            if (Math.random() <= 0.2 && itemCount <= 8) { 
+                createItem(obstaclePosition.x, obstaclePosition.z, t, items);
+                itemCount += 1;
+            }
+
             point += 10;
             bombNumber += 1;
+        }
+    }
+}
+
+
+function checkForItem(items, characters, blastRadius) {
+    for (let i = items.length - 1; i >= 0; i--) {
+        const character = characters[0];
+        const item = items[i];
+        const itemPosition = item.getPosition();
+        const characterPosition = character.getPosition();
+        const distance = characterPosition.distance(itemPosition);
+
+        if (distance <= blastRadius) {
+            item.destroy();
+            items.splice(i, 1);
+            console.log("Destroyed item at", itemPosition);
+            switch (item.itemType) {
+                case 1: 
+                    speed = 15;
+                    boostAlert();
+                    setTimeout(() => {
+                        speed = 12.5;
+                        console.log("Speed reset to normal");
+                        clearInstruction("boostAlert");
+                    }, 5000);
+                    break;
+                case 2:
+                    live += 1;
+                    liveAlert();
+                    setTimeout(() => {
+                        clearInstruction("liveAlert");
+                    }, 1000);
+                    break;
+
+            }
         }
     }
 }
@@ -71,7 +118,7 @@ function checkDestroyEnemy(enemies, bombPosition, blastRadius) {
             clearInstruction("enemyInstruction");
             clearInstruction("speedAlert");
             console.log("Destroyed enemy at", enemyPosition);
-            speed = 15;
+            speed = 12.5;
             point += 50;
             enemyKill += 1;
         }

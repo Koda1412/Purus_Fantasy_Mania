@@ -192,9 +192,7 @@ function createObstacle(x, z, t, obstacles) {
 
     obstacleEntity.addComponent("rigidbody", {
         type: "static", 
-        mass: 0,
-        friction: 0.5, 
-        restitution: 0.1 
+        mass: 0
     });
 
     obstacleEntity.rigidbody.syncEntityToBody();

@@ -3,7 +3,8 @@
 let app;
 // Default game setting
 
-let speed = 15; 
+let itemCount = 0;
+let speed = 12.5; 
 let isPause = false;
 let isVolumeOn = true;
 let isThemeOn = true;
@@ -104,6 +105,7 @@ function initializeGame() {
         let velocity = new pc.Vec3();
         app.on("update", (dt) => {
             if (isPause) return;
+            checkForItem(items, characters, 2);
             velocity.set(0, 0, 0); 
             if (keyboard.isPressed(pc.KEY_W)) {
                 velocity.z -= speed;
@@ -176,6 +178,7 @@ function initializeGame() {
         const obstacles = [];
         const enemies = []; 
         const bosses = [];
+        const items = [];
 
         let canCreateBomb = true;
         const bombSound = new Audio("../../assets/audio/drop_bomb.mp3");
@@ -188,7 +191,7 @@ function initializeGame() {
                 setTimeout(() => {
                     characterEntity.animation?.play(assets.charRunAnimationAsset.name);
                 }, 400);
-                createBomb(bombs, characterEntity, obstacles, enemies, bosses); 
+                createBomb(bombs, characterEntity, obstacles, enemies, bosses, items); 
                 clearInstruction("bombInstruction");
                 clearInstruction("bossInstruction");
                 canCreateBomb = false; 

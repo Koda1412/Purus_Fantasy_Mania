@@ -124,6 +124,50 @@ function displayBoss(bossLive) {
 }
 
 
+function boostAlert() {
+    let boostAlert = document.getElementById("boostAlert");
+    if (!boostAlert) {
+    boostAlert = document.createElement("div");
+    boostAlert.id = "boostAlert";
+    boostAlert.style.position = "absolute";
+    boostAlert.style.top = "43.5%";
+    boostAlert.style.left = "39%";
+    boostAlert.style.fontFamily = "fantasy";
+    boostAlert.style.fontSize = "20px";
+    boostAlert.style.color = "white";
+    boostAlert.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    boostAlert.style.padding = "10px"; 
+    boostAlert.style.borderRadius = "10px";
+    boostAlert.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    boostAlert.style.backgroundSize = "cover";
+    boostAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(boostAlert);
+    boostAlert.innerHTML = `Speed Boost`;  
+    }
+}
+
+function liveAlert() {
+    let liveAlert = document.getElementById("liveAlert");
+    if (!liveAlert) {
+    liveAlert = document.createElement("div");
+    liveAlert.id = "liveAlert";
+    liveAlert.style.position = "absolute";
+    liveAlert.style.top = "43.5%";
+    liveAlert.style.left = "42%";
+    liveAlert.style.fontFamily = "fantasy";
+    liveAlert.style.fontSize = "20px";
+    liveAlert.style.color = "white";
+    liveAlert.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    liveAlert.style.padding = "10px"; 
+    liveAlert.style.borderRadius = "10px";
+    liveAlert.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    liveAlert.style.backgroundSize = "cover";
+    liveAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(liveAlert);
+    liveAlert.innerHTML = `+1 Live`;  
+    }
+}
+
 function bombAlert() {
     let bombAlert = document.getElementById("bombAlert");
     if (!bombAlert) {
