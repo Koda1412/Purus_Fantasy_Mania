@@ -15,10 +15,13 @@ function gameWin(point, enemyKill) {
     clearInstruction("displayBoss");
     clearInstruction("bossInstruction");
     clearInstruction("pauseButton"); 
+    clearInstruction("speedAlert"); 
     theme.pause();
     theme.currentTime = 0;
     app.off("update");
     victory.play();
+    updateHighScore();
+
     const gameWinMessage = document.createElement("div");
     gameWinMessage.id = "gameWinMessage";
     gameWinMessage.style.position = "absolute";
@@ -35,7 +38,7 @@ function gameWin(point, enemyKill) {
     gameWinMessage.style.backgroundSize = "cover";
     gameWinMessage.style.borderRadius = "10px";
     gameWinMessage.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)"; 
-    gameWinMessage.innerHTML = `YOU WIN<br><br>Point: ${point}<br>Enemy Kill: ${enemyKill}<br>Press R to Restart`;
+    gameWinMessage.innerHTML = `YOU WIN<br><br>Point: ${point}<br>High Score: ${highScore}<br>Enemy Kill: ${enemyKill}<br>Press R to Restart`;
     document.body.appendChild(gameWinMessage);
 
     document.body.addEventListener("keydown", (event) => {

@@ -11,10 +11,10 @@ function checkForDestruction(obstacles, bombPosition, blastRadius) {
         if (distance <= blastRadius) {
             obstacle.destroy();
             obstacles.splice(i, 1);
-            point += 10;
-            bombNumber += 1;
             clearInstruction("obstaclesInstruction");
             console.log("Destroyed obstacle at", obstaclePosition);
+            point += 10;
+            bombNumber += 1;
         }
     }
 }
@@ -41,6 +41,8 @@ function checkDestroyCharacter(characters, bombPosition, blastRadius) {
 
         if (distance <= blastRadius) {
             live -= 1;
+            speed = 10;
+            speedAlert();
             if (isVolumeOn) {
             mainS.play();
             }
@@ -67,7 +69,9 @@ function checkDestroyEnemy(enemies, bombPosition, blastRadius) {
             enemies.splice(i, 1);
             clearInterval(enemy.enemyBombInterval);
             clearInstruction("enemyInstruction");
+            clearInstruction("speedAlert");
             console.log("Destroyed enemy at", enemyPosition);
+            speed = 15;
             point += 50;
             enemyKill += 1;
         }

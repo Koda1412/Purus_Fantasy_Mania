@@ -3,6 +3,7 @@
 let app;
 // Default game setting
 
+let speed = 15; 
 let isPause = false;
 let isVolumeOn = true;
 let isThemeOn = true;
@@ -12,6 +13,8 @@ let point = 0;
 let bombNumber = 5;
 let live = 2;
 let bossLive = 8;
+let highScore = localStorage.getItem('highScore') ? parseInt(localStorage.getItem('highScore')) : 0;
+
 
 const theme = new Audio("../../assets/audio/themes.mp3");
 
@@ -97,8 +100,6 @@ function initializeGame() {
         const planeScaleZ = 100; 
         const boundaryX = planeScaleX / 2;
         const boundaryZ = planeScaleZ / 2; 
-
-        const speed = 15; 
 
         let velocity = new pc.Vec3();
         app.on("update", (dt) => {
@@ -598,11 +599,11 @@ function initializeGame() {
             }
             // Check display
             if (currentScene == 'scene1') {
-                display(enemyKill, point, bombNumber, live, 22);
+                display(enemyKill, point, bombNumber, live, 22, highScore);
             } else if (currentScene == 'scene2') {
-                display(enemyKill, point, bombNumber, live, 20);
+                display(enemyKill, point, bombNumber, live, 20, highScore);
             } else if (currentScene == 'scene3') {
-                display(enemyKill, point, bombNumber, live, 24);
+                display(enemyKill, point, bombNumber, live, 24, highScore);
             }
             if (enemyKill == 8 && !hasSpawnedStrongEnemies || enemyKill == 20 && !hasSpawnedStrongEnemies) {
                 hasSpawnedStrongEnemies = true;

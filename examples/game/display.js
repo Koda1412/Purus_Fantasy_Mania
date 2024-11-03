@@ -1,9 +1,10 @@
 
-function display(enemyKill, point, bombNumber, live, targetKill) {
+function display(enemyKill, point, bombNumber, live, targetKill, highscore) {
     let progressPercentage = (enemyKill / targetKill) * 100;
     if (progressPercentage > 100) {
         progressPercentage = 100; 
     }
+
     let display = document.getElementById("display");
     if (!display) {
         display = document.createElement("div");
@@ -42,16 +43,32 @@ function display(enemyKill, point, bombNumber, live, targetKill) {
 
         statusBarContainer.appendChild(statusBarFill);
         display.appendChild(statusBarContainer);
+
+        const highscoreMessage = document.createElement("div");
+        highscoreMessage.id = "highscoreMessage";
+        highscoreMessage.style.color = "white";
+        highscoreMessage.style.fontFamily = "fantasy";
+        highscoreMessage.style.marginTop = "5px";
+        display.appendChild(highscoreMessage);
     }
 
     const infoText = document.getElementById("infoText");
-    infoText.innerHTML = `Live: ${live}<br>Point: ${point}<br>Number of Bomb: ${bombNumber}<br>Enemy Kill: ${enemyKill}`;
+    const highscoreMessage = document.getElementById("highscoreMessage");
+
+    if (point > highscore) {
+        infoText.innerHTML = `Live: ${live}<br><span style="color: yellow;">Point: ${point}</span><br>Number of Bomb: ${bombNumber}<br>Enemy Kill: ${enemyKill}`;
+        highscoreMessage.innerText = "You reached highscore!";
+    } else {
+        infoText.innerHTML = `Live: ${live}<br>Point: ${point}<br>Number of Bomb: ${bombNumber}<br>Enemy Kill: ${enemyKill}`;
+        highscoreMessage.innerText = "";
+    }
     
     const statusBarFill = document.getElementById("statusBarFill");
     if (statusBarFill) {
         statusBarFill.style.width = `${progressPercentage}%`;
     }
 }
+
 
 
 function displayBoss(bossLive) {
@@ -128,6 +145,29 @@ function bombAlert() {
     bombAlert.innerHTML = `ATTENTION!! OUT OF BOMB<br> Bomb obstacles to get more`;  
     }
 }
+
+function speedAlert() {
+    let speedAlert = document.getElementById("speedAlert");
+    if (!speedAlert) {
+    speedAlert = document.createElement("div");
+    speedAlert.id = "speedAlert";
+    speedAlert.style.position = "absolute";
+    speedAlert.style.top = "42.5%";
+    speedAlert.style.left = "55%";
+    speedAlert.style.fontFamily = "fantasy";
+    speedAlert.style.fontSize = "15px";
+    speedAlert.style.color = "white";
+    speedAlert.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    speedAlert.style.padding = "10px"; 
+    speedAlert.style.borderRadius = "10px";
+    speedAlert.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    speedAlert.style.backgroundSize = "cover";
+    speedAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(speedAlert);
+    speedAlert.innerHTML = `ATTENTION!! Speed decrease<br> Bomb enemy to get normal`;  
+    }
+}
+
 
 
 function enemyInstruction() {
@@ -420,3 +460,15 @@ function addPauseButton() {
     document.body.appendChild(pauseButton);
 }
 
+function updateHighScore() {
+    if (point > highScore) {
+        highScore = point;
+        localStorage.setItem('highScore', highScore);
+        console.log("New high score:", highScore);
+    }
+}
+
+function resetScore() {
+    updateHighScore(); 
+    point = 0;  
+}

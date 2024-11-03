@@ -16,11 +16,14 @@ function gameOver(enemyKill, point) {
     clearInstruction("displayBoss");
     clearInstruction("bossInstruction");
     clearInstruction("pauseButton"); 
+    clearInstruction("speedAlert"); 
+    
     theme.pause();
     theme.currentTime = 0;
     app.off("update");
     over.play();
 
+    updateHighScore();
     const gameOverMessage = document.createElement("div");
     gameOverMessage.id = "gameOverMessage";
     gameOverMessage.style.position = "absolute";
@@ -36,7 +39,7 @@ function gameOver(enemyKill, point) {
     gameOverMessage.style.padding = "10px"; 
     gameOverMessage.style.borderRadius = "10px";
     gameOverMessage.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)"; 
-    gameOverMessage.innerHTML = `GAME OVER<br><br>Point: ${point}<br>Enemy Kill: ${enemyKill}<br>Press R to Restart`;
+    gameOverMessage.innerHTML = `GAME OVER<br><br>Point: ${point}<br>High Score: ${highScore}<br>Enemy Kill: ${enemyKill}<br>Press R to Restart`;
     document.body.appendChild(gameOverMessage);
 
     document.body.addEventListener("keydown", (event) => {
