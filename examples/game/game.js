@@ -2,6 +2,10 @@
 // Initialize variables
 let app;
 // Default game setting
+
+let isPause = false;
+let isVolumeOn = true;
+let isThemeOn = true;
 let currentScene;
 let enemyKill = 0;
 let point = 0;
@@ -35,6 +39,7 @@ function initializeGame() {
 
     
     app.start();
+
     theme.volume = 0.5;
     theme.loop = true;
     theme.play();
@@ -97,6 +102,7 @@ function initializeGame() {
 
         let velocity = new pc.Vec3();
         app.on("update", (dt) => {
+            if (isPause) return;
             velocity.set(0, 0, 0); 
             if (keyboard.isPressed(pc.KEY_W)) {
                 velocity.z -= speed;
@@ -163,20 +169,20 @@ function initializeGame() {
             cameraPosition.lerp(cameraPosition, desiredPosition, 0.1);
             cameraEntity.setPosition(cameraPosition);
             cameraEntity.lookAt(targetPosition);
-        });
+            });
         
         const bombs = [];
         const obstacles = [];
         const enemies = []; 
-        const bosses = []; 
-        
-        // -------------------------------- ENEMY GENERATION -------------------------------------//
+        const bosses = [];
 
         let canCreateBomb = true;
         const bombSound = new Audio("../../assets/audio/drop_bomb.mp3");
         document.body.addEventListener("keydown", (event) => {
             if (event.code === "Space" && canCreateBomb) {
-                bombSound.play();
+                if (isVolumeOn) {
+                    bombSound.play();
+                    }
                 characterEntity.animation?.play(assets.charAttackAnimationAsset.name);
                 setTimeout(() => {
                     characterEntity.animation?.play(assets.charRunAnimationAsset.name);
@@ -190,7 +196,8 @@ function initializeGame() {
                 }, 2000)
             }
         });
-        
+
+        // -------------------------------- ENEMY GENERATION -------------------------------------//
 
         const createEnemy = (type, texture) => {
             const enemyEntity = new pc.Entity("Enemy");
@@ -271,47 +278,53 @@ function initializeGame() {
                 enemyBomb.setPosition(enemyEntity.getPosition().x, 1, enemyEntity.getPosition().z);
                 app.root.addChild(enemyBomb);
 
-                setTimeout(() => {
-                    console.log("Enemy Bomb exploded at", enemyBomb.getPosition());
-
-                    // Create a red bomb area
-                    const enemyBombArea = new pc.Entity("EnemyBombArea");
-                    enemyBombArea.addComponent("model", {
-                        type: "asset",
-                        asset: assets.explosionEnemyBombModelAsset
-                    });
-                    enemyBombArea.setLocalScale(8, 8, 8);
-                    enemyBombArea.setPosition(enemyBomb.getPosition().x, -0.5, enemyBomb.getPosition().z);
-
-                    app.root.addChild(enemyBombArea);
-
-                    let scaleDuration = 200;
-                    let scaleSteps = 15;
-                    let scaleStepTime = scaleDuration / scaleSteps;
-                    let currentScale = 1.5;
-                    let targetScale = 2;
-
-                    const animateScale = () => {
-                        if (currentScale < targetScale) {
-                            currentScale += (targetScale - 1.5) / scaleSteps; 
-                            enemyBombArea.setLocalScale(currentScale, currentScale, currentScale);
-                            setTimeout(animateScale, scaleStepTime);
-                        }
-                    };
-
-                    animateScale(); 
-
-                    setTimeout(() => {
-                        enemyBombArea.destroy();
-                    }, 200); 
-
-                    checkEnemyForDestruction(obstacles, enemyBomb.getPosition(), 10); 
-                    checkDestroyCharacter(characters, enemyBomb.getPosition(), 6);
-                    enemyBomb.destroy();
-                }, 1000);
+                const waitForUnpauseThenBombExplode = () => {
+                    if (!isPause) {
+                        console.log("Enemy Bomb exploded at", enemyBomb.getPosition());
+                
+                        const enemyBombArea = new pc.Entity("EnemyBombArea");
+                        enemyBombArea.addComponent("model", {
+                            type: "asset",
+                            asset: assets.explosionEnemyBombModelAsset
+                        });
+                        enemyBombArea.setLocalScale(8, 8, 8);
+                        enemyBombArea.setPosition(enemyBomb.getPosition().x, -0.5, enemyBomb.getPosition().z);
+                
+                        app.root.addChild(enemyBombArea);
+                
+                        let scaleDuration = 200;
+                        let scaleSteps = 15;
+                        let scaleStepTime = scaleDuration / scaleSteps;
+                        let currentScale = 1.5;
+                        let targetScale = 2;
+                
+                        const animateScale = () => {
+                            if (currentScale < targetScale) {
+                                currentScale += (targetScale - 1.5) / scaleSteps; 
+                                enemyBombArea.setLocalScale(currentScale, currentScale, currentScale);
+                                setTimeout(animateScale, scaleStepTime);
+                            }
+                        };
+                
+                        animateScale(); 
+                
+                        setTimeout(() => {
+                            enemyBombArea.destroy();
+                        }, 200); 
+                
+                        checkEnemyForDestruction(obstacles, enemyBomb.getPosition(), 10); 
+                        checkDestroyCharacter(characters, enemyBomb.getPosition(), 6);
+                        enemyBomb.destroy();
+                    } else {
+                        setTimeout(waitForUnpauseThenBombExplode, 100);
+                    }
+                };
+                
+                setTimeout(waitForUnpauseThenBombExplode, 1000);
             };
 
             const dropBombWithAnimation = () => {
+                if (isPause) return;
                 enemyEntity.animation?.play(assets.charAttackAnimationAsset.name);
                 dropBomb();
                 
@@ -328,6 +341,7 @@ function initializeGame() {
             }, Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000);
 
             app.on("update", (dt) => {
+                if (isPause) return;
                 if (enemyEntity) {
                     const playerPos = characterEntity.getPosition();
                     const enemyPos = enemyEntity.getPosition();
@@ -469,45 +483,52 @@ function initializeGame() {
                 } 
                 app.root.addChild(bossBomb);
         
-                setTimeout(() => {
-                    console.log("Boss Bomb exploded at", bossBomb.getPosition());
-        
-                    const bossBombArea = new pc.Entity("BossBombArea");
-                    bossBombArea.addComponent("model", {
-                        type: "asset",
-                        asset: assets.explosionBombModelAsset
-                    });
-                    bossBombArea.setLocalScale(80, 80, 80);
-                    bossBombArea.setPosition(bossBomb.getPosition().x, 0, bossBomb.getPosition().z);
-                    app.root.addChild(bossBombArea);
-        
-                    let scaleDuration = 200;
-                    let scaleSteps = 15;
-                    let scaleStepTime = scaleDuration / scaleSteps;
-                    let currentScale = 1.5;
-                    let targetScale = 2;
-        
-                    const animateScale = () => {
-                        if (currentScale < targetScale) {
-                            currentScale += (targetScale - 1.5) / scaleSteps; 
-                            bossBombArea.setLocalScale(currentScale, currentScale, currentScale);
-                            setTimeout(animateScale, scaleStepTime);
-                        }
-                    };
-        
-                    animateScale(); 
-        
-                    setTimeout(() => {
-                        bossBombArea.destroy();
-                    }, 500); 
-        
-                    checkEnemyForDestruction(obstacles, bossBomb.getPosition(), 15); 
-                    checkDestroyCharacter(characters, bossBomb.getPosition(), 20);
-                    bossBomb.destroy();
-                }, 2000);
+                const waitForUnpauseThenBossBombExplode = () => {
+                    if (!isPause) {
+                        console.log("Boss Bomb exploded at", bossBomb.getPosition());
+                
+                        const bossBombArea = new pc.Entity("BossBombArea");
+                        bossBombArea.addComponent("model", {
+                            type: "asset",
+                            asset: assets.explosionBombModelAsset
+                        });
+                        bossBombArea.setLocalScale(80, 80, 80);
+                        bossBombArea.setPosition(bossBomb.getPosition().x, 0, bossBomb.getPosition().z);
+                        app.root.addChild(bossBombArea);
+                
+                        let scaleDuration = 200;
+                        let scaleSteps = 15;
+                        let scaleStepTime = scaleDuration / scaleSteps;
+                        let currentScale = 1.5;
+                        let targetScale = 2;
+                
+                        const animateScale = () => {
+                            if (currentScale < targetScale) {
+                                currentScale += (targetScale - 1.5) / scaleSteps; 
+                                bossBombArea.setLocalScale(currentScale, currentScale, currentScale);
+                                setTimeout(animateScale, scaleStepTime);
+                            }
+                        };
+                
+                        animateScale();
+                
+                        setTimeout(() => {
+                            bossBombArea.destroy();
+                        }, 500);
+                
+                        checkEnemyForDestruction(obstacles, bossBomb.getPosition(), 15);
+                        checkDestroyCharacter(characters, bossBomb.getPosition(), 20);
+                        bossBomb.destroy();
+                    } else {
+                        setTimeout(waitForUnpauseThenBossBombExplode, 100); 
+                    }
+                };
+                
+                setTimeout(waitForUnpauseThenBossBombExplode, 2000);
             };
         
             const dropBombWithAnimation = () => {
+                if (isPause) return;
                 bossEntity.animation?.play(assets.charAttackAnimationAsset.name);
                 dropBomb();
                 
@@ -524,6 +545,7 @@ function initializeGame() {
             }, Math.floor(Math.random() * (6000 - 4000 + 1)) + 4000);
         
             app.on("update", (dt) => {
+                if (isPause) return;
                 if (bossEntity) {
                     const playerPos = characterEntity.getPosition();
                     const enemyPos = bossEntity.getPosition();
@@ -569,7 +591,7 @@ function initializeGame() {
         // Set flag for spawn strong enemy
         let hasSpawnedStrongEnemies = false;
         let hasSpawnedBoss = false;
-
+ 
         app.on("update", () => {
             if (hasSpawnedBoss) {
                 displayBoss(bossLive);
@@ -602,7 +624,7 @@ function initializeGame() {
                 hasSpawnedBoss = true;
                 spawnMultipleBosses(1);
                 bossInstruction();
-            } else if (currentScene == 'scene2' && enemyKill >= 20 && !hasSpawnedBoss) {
+            } else if (currentScene == 'scene2' && enemyKill >= 2 && !hasSpawnedBoss) {
                 hasSpawnedBoss = true;
                 spawnMultipleBosses(1);
                 bossInstruction();
@@ -612,7 +634,8 @@ function initializeGame() {
                 bossInstruction();
             }
         });
-
+        
+        addPauseButton();
         moveInstructionD();
         moveInstructionA();
         moveInstructionS();

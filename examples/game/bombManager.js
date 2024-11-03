@@ -41,7 +41,9 @@ function checkDestroyCharacter(characters, bombPosition, blastRadius) {
 
         if (distance <= blastRadius) {
             live -= 1;
+            if (isVolumeOn) {
             mainS.play();
+            }
         }
 
         if (live <= 0 || bombNumber <= -1) {

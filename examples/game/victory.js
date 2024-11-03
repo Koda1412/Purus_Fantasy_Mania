@@ -1,6 +1,8 @@
 const victory = new Audio("../../assets/audio/victory.mp3");
 
 function gameWin(point, enemyKill) {
+
+    isPause = true;
     clearInstruction("display");    
     clearInstruction("enemyInstruction");
     clearInstruction("moveInstructionA");
@@ -12,6 +14,7 @@ function gameWin(point, enemyKill) {
     clearInstruction("bombAlert");
     clearInstruction("displayBoss");
     clearInstruction("bossInstruction");
+    clearInstruction("pauseButton"); 
     theme.pause();
     theme.currentTime = 0;
     app.off("update");

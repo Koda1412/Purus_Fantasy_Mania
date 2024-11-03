@@ -2,6 +2,8 @@
 const over = new Audio("../../assets/audio/lose.mp3");
 
 function gameOver(enemyKill, point) {
+
+    isPause = true;
     clearInstruction("display");    
     clearInstruction("enemyInstruction");
     clearInstruction("moveInstructionA");
@@ -13,6 +15,7 @@ function gameOver(enemyKill, point) {
     clearInstruction("bombAlert");
     clearInstruction("displayBoss");
     clearInstruction("bossInstruction");
+    clearInstruction("pauseButton"); 
     theme.pause();
     theme.currentTime = 0;
     app.off("update");

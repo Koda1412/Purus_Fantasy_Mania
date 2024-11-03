@@ -297,3 +297,126 @@ function clearInstruction(ins) {
         instruction.remove(); 
     }
 }
+
+function togglePauseMenu() {
+    isPause = !isPause;
+    if (isPause) {
+        showPauseMenu();
+        clearInstruction('pauseButton');
+    } else {
+        addPauseButton();
+        clearInstruction('pauseMenu');
+    }
+}
+
+function showPauseMenu() {
+    let pauseMenu = document.getElementById("pauseMenu");
+    if (!pauseMenu) {
+        pauseMenu = document.createElement("div");
+        pauseMenu.id = "pauseMenu";
+        pauseMenu.style.position = "absolute";
+        pauseMenu.style.top = "50%";
+        pauseMenu.style.left = "50%";
+        pauseMenu.style.transform = "translate(-50%, -50%)";
+        pauseMenu.style.width = "250px";
+        pauseMenu.style.height = "180px";
+        pauseMenu.style.color = "white";
+        pauseMenu.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+        pauseMenu.style.padding = "20px";
+        pauseMenu.style.borderRadius = "10px";
+        pauseMenu.style.textAlign = "center";
+        pauseMenu.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+        pauseMenu.style.backgroundImage = "url('../../assets/image/bossDisplay.jpg')";
+        pauseMenu.style.backgroundSize = "cover";
+        document.body.appendChild(pauseMenu);
+
+        const buttonContainer = document.createElement("div");
+        buttonContainer.style.display = "flex";
+        buttonContainer.style.flexDirection = "column"; 
+        buttonContainer.style.alignItems = "center"; 
+        buttonContainer.style.gap = "10px";
+        buttonContainer.style.marginTop = "20px";
+        pauseMenu.appendChild(buttonContainer);
+
+        const resumeButton = document.createElement("button");
+        resumeButton.innerHTML = "Back To Game";
+        resumeButton.style.fontSize = "20px";
+        resumeButton.style.fontFamily = "fantasy";
+        resumeButton.onclick = togglePauseMenu;
+        buttonContainer.appendChild(resumeButton);
+
+        const themeButton = document.createElement("button");
+        themeButton.id = "themeButton";
+        themeButton.innerHTML = isThemeOn ? "Music On" : "Music Off";
+        themeButton.style.fontSize = "20px";
+        themeButton.style.fontFamily = "fantasy";
+        themeButton.onclick = toggleTheme;
+        buttonContainer.appendChild(themeButton);
+
+        const volumeButton = document.createElement("button");
+        volumeButton.id = "volumeButton";
+        volumeButton.innerHTML = isVolumeOn ? "SFX On" : "SFX Off";
+        volumeButton.style.fontSize = "20px";
+        volumeButton.style.fontFamily = "fantasy";
+        volumeButton.onclick = toggleVolume;
+        buttonContainer.appendChild(volumeButton);
+
+        const exitButton = document.createElement("button");
+        exitButton.innerHTML = "Exit";
+        exitButton.style.fontSize = "20px";
+        exitButton.style.fontFamily = "fantasy";
+        exitButton.onclick = function() {
+            location.reload();
+        };
+        buttonContainer.appendChild(exitButton);
+    }
+}
+
+function toggleVolume() {
+    isVolumeOn = !isVolumeOn;
+    let volumeButton = document.getElementById("volumeButton");
+    volumeButton.innerHTML = isVolumeOn ? "SFX On" : "SFX Off";
+}
+
+function toggleTheme() {
+    let themeButton = document.getElementById("themeButton");
+    
+    if (isThemeOn) {
+        isThemeOn = !isThemeOn;
+        theme.pause();
+        themeButton.innerHTML = "Music Off";
+    } else {
+        isThemeOn = !isThemeOn;
+        theme.play();
+        themeButton.innerHTML = "Music On";
+    }
+}
+
+function addPauseButton() {
+    let existingButton = document.getElementById("pauseButton");
+    if (existingButton) return;
+
+    const pauseButton = document.createElement("button");
+    pauseButton.id = "pauseButton";
+    pauseButton.innerHTML = "Menu";
+    pauseButton.style.position = "absolute";
+    pauseButton.style.top = "90%";
+    pauseButton.style.left = "2%";
+    pauseButton.style.fontFamily = "fantasy";
+    pauseButton.style.fontSize = "18px";
+    pauseButton.style.padding = "10px";
+    pauseButton.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+    pauseButton.style.color = "white";
+    pauseButton.style.borderRadius = "5px";
+    pauseButton.style.boxShadow = "0 0 5px rgba(255, 255, 255, 0.5)";
+    pauseButton.style.backgroundImage = "url('../../assets/image/ins.jpg')";
+    pauseButton.style.backgroundSize = "cover";
+    pauseButton.onclick = togglePauseMenu;
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            togglePauseMenu();
+        }
+    });
+    document.body.appendChild(pauseButton);
+}
+

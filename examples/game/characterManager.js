@@ -44,7 +44,9 @@ function createBomb(bombs, characterEntity, obstacles, enemies, bosses) {
         setTimeout(() => {
             bombArea.destroy();
         }, 200); 
-        explosion.play();
+        if (isVolumeOn) {
+            explosion.play();
+            }
         bomb.destroy();
         checkForDestruction(obstacles, bomb.getPosition(), 10);
         checkDestroyEnemy(enemies, bomb.getPosition(), 5); 
