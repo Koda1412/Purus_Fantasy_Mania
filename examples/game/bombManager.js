@@ -47,6 +47,7 @@ function checkForItem(items, characters, blastRadius) {
                 case 1: 
                     speed = 15;
                     boostAlert();
+                    clearInstruction("speedAlert");
                     setTimeout(() => {
                         speed = 12.5;
                         console.log("Speed reset to normal");
