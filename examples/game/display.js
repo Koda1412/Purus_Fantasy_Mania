@@ -561,7 +561,6 @@ function togglePauseMenu() {
         clearInstruction('pauseMenu');
     }
 }
-
 function showPauseMenu() {
     let pauseMenu = document.getElementById("pauseMenu");
     if (!pauseMenu) {
@@ -572,7 +571,7 @@ function showPauseMenu() {
         pauseMenu.style.left = "50%";
         pauseMenu.style.transform = "translate(-50%, -50%)";
         pauseMenu.style.width = "250px";
-        pauseMenu.style.height = "180px";
+        pauseMenu.style.height = "250px";
         pauseMenu.style.color = "white";
         pauseMenu.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
         pauseMenu.style.padding = "20px";
@@ -591,33 +590,36 @@ function showPauseMenu() {
         buttonContainer.style.marginTop = "20px";
         pauseMenu.appendChild(buttonContainer);
 
+        const buttonStyle = {
+            width: "150px",
+            fontSize: "20px",
+            fontFamily: "fantasy",
+            padding: "10px"
+        };
+
         const resumeButton = document.createElement("button");
         resumeButton.innerHTML = "Back To Game";
-        resumeButton.style.fontSize = "20px";
-        resumeButton.style.fontFamily = "fantasy";
+        Object.assign(resumeButton.style, buttonStyle);
         resumeButton.onclick = togglePauseMenu;
         buttonContainer.appendChild(resumeButton);
 
         const themeButton = document.createElement("button");
         themeButton.id = "themeButton";
         themeButton.innerHTML = isThemeOn ? "Music On" : "Music Off";
-        themeButton.style.fontSize = "20px";
-        themeButton.style.fontFamily = "fantasy";
+        Object.assign(themeButton.style, buttonStyle);
         themeButton.onclick = toggleTheme;
         buttonContainer.appendChild(themeButton);
 
         const volumeButton = document.createElement("button");
         volumeButton.id = "volumeButton";
         volumeButton.innerHTML = isVolumeOn ? "SFX On" : "SFX Off";
-        volumeButton.style.fontSize = "20px";
-        volumeButton.style.fontFamily = "fantasy";
+        Object.assign(volumeButton.style, buttonStyle);
         volumeButton.onclick = toggleVolume;
         buttonContainer.appendChild(volumeButton);
 
         const exitButton = document.createElement("button");
         exitButton.innerHTML = "Exit";
-        exitButton.style.fontSize = "20px";
-        exitButton.style.fontFamily = "fantasy";
+        Object.assign(exitButton.style, buttonStyle);
         exitButton.onclick = function() {
             location.reload();
         };
