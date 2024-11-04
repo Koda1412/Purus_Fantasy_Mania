@@ -97,7 +97,7 @@ function displaySpecial(specialTree) {
     const infoText = document.getElementById("infoTextSpecial");
 
     if (infoText) {
-        infoText.innerHTML = `Number of Special Tree: ${specialTree}<br>Press P to spawn special tree, enemy chase it will die`;
+        infoText.innerHTML = `Number of Cherry Blossom: ${specialTree}<br>Press P to spawn cherry blossom, enemy chase it will die`;
     }
 }
 
@@ -185,7 +185,7 @@ function specialAlert() {
     specialAlert.id = "specialAlert";
     specialAlert.style.position = "absolute";
     specialAlert.style.top = "43.5%";
-    specialAlert.style.left = "37.5%";
+    specialAlert.style.left = "36%";
     specialAlert.style.fontFamily = "fantasy";
     specialAlert.style.fontSize = "20px";
     specialAlert.style.color = "white";
@@ -196,7 +196,7 @@ function specialAlert() {
     specialAlert.style.backgroundSize = "cover";
     specialAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
     document.body.appendChild(specialAlert);
-    specialAlert.innerHTML = `+5 Special Trees`;  
+    specialAlert.innerHTML = `+5 Cherry Blossom`;  
     }
 }
 
@@ -222,25 +222,47 @@ function liveAlert() {
     }
 }
 
-function mysteryAlert() {
-    let mysteryAlert = document.getElementById("mysteryAlert");
-    if (!mysteryAlert) {
-    mysteryAlert = document.createElement("div");
-    mysteryAlert.id = "mysteryAlert";
-    mysteryAlert.style.position = "absolute";
-    mysteryAlert.style.top = "43.5%";
-    mysteryAlert.style.left = "37.5%";
-    mysteryAlert.style.fontFamily = "fantasy";
-    mysteryAlert.style.fontSize = "20px";
-    mysteryAlert.style.color = "white";
-    mysteryAlert.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
-    mysteryAlert.style.padding = "10px"; 
-    mysteryAlert.style.borderRadius = "10px";
-    mysteryAlert.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
-    mysteryAlert.style.backgroundSize = "cover";
-    mysteryAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
-    document.body.appendChild(mysteryAlert);
-    mysteryAlert.innerHTML = `+1 Live or -1 Live`;  
+function mysteryAlertA() {
+    let mysteryAlertA = document.getElementById("mysteryAlertA");
+    if (!mysteryAlertA) {
+    mysteryAlertA = document.createElement("div");
+    mysteryAlertA.id = "mysteryAlertA";
+    mysteryAlertA.style.position = "absolute";
+    mysteryAlertA.style.top = "43.5%";
+    mysteryAlertA.style.left = "42%";
+    mysteryAlertA.style.fontFamily = "fantasy";
+    mysteryAlertA.style.fontSize = "20px";
+    mysteryAlertA.style.color = "white";
+    mysteryAlertA.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    mysteryAlertA.style.padding = "10px"; 
+    mysteryAlertA.style.borderRadius = "10px";
+    mysteryAlertA.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    mysteryAlertA.style.backgroundSize = "cover";
+    mysteryAlertA.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(mysteryAlertA);
+    mysteryAlertA.innerHTML = `+2 Live`;  
+    }
+}
+
+function mysteryAlertB() {
+    let mysteryAlertB = document.getElementById("mysteryAlertB");
+    if (!mysteryAlertB) {
+    mysteryAlertB = document.createElement("div");
+    mysteryAlertB.id = "mysteryAlertB";
+    mysteryAlertB.style.position = "absolute";
+    mysteryAlertB.style.top = "43.5%";
+    mysteryAlertB.style.left = "42%";
+    mysteryAlertB.style.fontFamily = "fantasy";
+    mysteryAlertB.style.fontSize = "20px";
+    mysteryAlertB.style.color = "white";
+    mysteryAlertB.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    mysteryAlertB.style.padding = "10px"; 
+    mysteryAlertB.style.borderRadius = "10px";
+    mysteryAlertB.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    mysteryAlertB.style.backgroundSize = "cover";
+    mysteryAlertB.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(mysteryAlertB);
+    mysteryAlertB.innerHTML = `-1 Live`;  
     }
 }
 

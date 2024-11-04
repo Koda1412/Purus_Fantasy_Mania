@@ -31,8 +31,8 @@ function checkForDestruction(obstacles, bombPosition, blastRadius, items) {
             } else {
                 t = 4;
             }
-            if (Math.random() <= 0.2 && itemCount <= 10) { 
-                createItem(obstaclePosition.x, obstaclePosition.z, t, items);
+            if (Math.random() <= 0.9 && itemCount <= 15) { 
+                createItem(obstaclePosition.x, obstaclePosition.z, 5, items);
                 itemCount += 1;
             }
 
@@ -59,6 +59,7 @@ function checkForEnemy(items, enemies, blastRadius) {
                     case 9: 
                         enemy.destroy();
                         enemies.splice(i, 1);
+                        clearInterval(enemy.enemyBombInterval);
                         console.log("Destroyed enemy at", itemPosition);
                         enemyKill += 1;
                         point += 50;
@@ -140,14 +141,19 @@ function checkForItem(items, characters, blastRadius) {
                     }, 500);
                     break;
                 case 5:
-                    if (Math.random() <= 0.5 ) {
+                    if (Math.random() <= 0.4 ) {
                         live += 2;
+                        mysteryAlertA();
                     } else {
                         live -= 1;
+                        mysteryAlertB();
+                        if (isVolumeOn) {
+                            mainS.play();
+                        }
                     }
-                    mysteryAlert();
                     setTimeout(() => {
-                        clearInstruction("mysteryAlert");
+                        clearInstruction("mysteryAlertA");
+                        clearInstruction("mysteryAlertB");
                     }, 1000);
                     break;
                 case 6:
@@ -166,7 +172,9 @@ function checkForItem(items, characters, blastRadius) {
                     break;
                 case 8:
                 live -= 1;
+                if (isVolumeOn) {
                 mainS.play();
+                }
                 break;
 
             }

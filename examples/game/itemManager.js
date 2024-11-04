@@ -40,8 +40,8 @@ function createItem(x, z, t, items) {
             break;
         case 7:
             chosenModel = assets.specialTreeModelAsset;
-            itemEntity.setLocalScale(0.008, 0.008, 0.008);  
-            itemEntity.setPosition(x, 1, z);
+            itemEntity.setLocalScale(0.35, 0.35, 0.35);  
+            itemEntity.setPosition(x, 1.5, z);
             break;
         case 8:
             chosenModel = assets.poisionModelAsset;
@@ -50,7 +50,7 @@ function createItem(x, z, t, items) {
             break;
         case 9:
             chosenModel = assets.specialTreeModelAsset;
-            itemEntity.setLocalScale(0.01, 0.01, 0.01);  
+            itemEntity.setLocalScale(0.5, 0.5, 0.5);  
             itemEntity.setPosition(x, 0, z);
             break;
         default: 

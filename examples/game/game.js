@@ -641,6 +641,10 @@ function initializeGame() {
             } else if (enemyKill != 8 && enemyKill != 20 ) {
                 hasSpawnedStrongEnemies = false;
             }
+
+            if (specialTree == 0) {
+                clearInstruction("displaySpecial");
+            }
             // Check bomb alert
             if ( bombNumber <= 2) {
                 bombAlert()
