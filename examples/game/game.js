@@ -607,6 +607,7 @@ function initializeGame() {
         const spawnMultipleBosses = (bossNumber) => {
             for (let i = 0; i < bossNumber; i++) {
                 createBoss();
+                specialTree += 5;
             }
         
         };
