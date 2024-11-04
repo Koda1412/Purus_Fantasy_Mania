@@ -1,6 +1,14 @@
 
 
 const mainS = new Audio("../../assets/audio/main.mp3");
+const itemS = new Audio("../../assets/audio/item.wav");
+const dieS = new Audio("../../assets/audio/oh.wav");
+const dieS2 = new Audio("../../assets/audio/dieB.wav");
+const dieS3 = new Audio("../../assets/audio/dieC.wav");
+const explosionS = new Audio("../../assets/audio/explosion.wav");
+const bossS = new Audio("../../assets/audio/boss.wav");
+
+
 
 function checkForDestruction(obstacles, bombPosition, blastRadius, items) {
     for (let i = obstacles.length - 1; i >= 0; i--) {
@@ -24,15 +32,18 @@ function checkForDestruction(obstacles, bombPosition, blastRadius, items) {
                 t = 2;
             } else if (rand <= 0.35) {
                 t = 5;
-            } else if (rand <= 0.55) {
+            } else if (rand <= 0.5) {
                 t = 1;
-            } else if (rand <= 0.75) {
+            } else if (rand <= 0.65) {
                 t = 3;
-            } else {
-                t = 4;
             }
-            if (Math.random() <= 0.9 && itemCount <= 15) { 
-                createItem(obstaclePosition.x, obstaclePosition.z, 5, items);
+            else if (rand <= 0.8) {
+                t = 4;
+            } else {
+                t = 8;
+            }
+            if (Math.random() <= 0.25 && itemCount <= 10) { 
+                createItem(obstaclePosition.x, obstaclePosition.z, t, items);
                 itemCount += 1;
             }
 
@@ -59,6 +70,14 @@ function checkForEnemy(items, enemies, blastRadius) {
                     case 9: 
                         enemy.destroy();
                         enemies.splice(i, 1);
+                        if (isVolumeOn) {
+                            const randomDieSound = Math.floor(Math.random() * 2) + 1;
+                            if (randomDieSound === 1) {
+                                dieS.play();
+                            } else if (randomDieSound === 2) {
+                                dieS2.play();
+                            }
+                        }
                         clearInterval(enemy.enemyBombInterval);
                         console.log("Destroyed enemy at", itemPosition);
                         enemyKill += 1;
@@ -86,9 +105,18 @@ function checkForBoss(items, bosses, blastRadius) {
                 case 9: 
                     bossLive -= 0.5;
                     point += 10;
+                    if (isVolumeOn) {
+                        dieS3.play();
+                    }
                     break;
-                case 7: 
-                bossLive += 0.5;
+                case 8: 
+                bossLive += 0.25;
+                if (bossLive >= 8){
+                    bossLive = 8;
+                }
+                if (isVolumeOn){
+                    bossS.play();
+                }
                 break;
             }
         }
@@ -99,7 +127,8 @@ function checkForBoss(items, bosses, blastRadius) {
 function checkForItem(items, characters, blastRadius) {
     for (let i = items.length - 1; i >= 0; i--) {
         const character = characters[0];
-        const item = items[i];
+        if (items[i].itemType != 9) {
+        let item = items[i];
         const itemPosition = item.getPosition();
         const characterPosition = character.getPosition();
         const distance = characterPosition.distance(itemPosition);
@@ -112,6 +141,9 @@ function checkForItem(items, characters, blastRadius) {
                 case 1: 
                     speed = 15;
                     boostAlert();
+                    if (isVolumeOn) {
+                        itemS.play();
+                    }
                     clearInstruction("speedAlert");
                     setTimeout(() => {
                         speed = 12.5;
@@ -122,6 +154,9 @@ function checkForItem(items, characters, blastRadius) {
                 case 2:
                     live += 1;
                     liveAlert();
+                    if (isVolumeOn) {
+                        itemS.play();
+                    }
                     setTimeout(() => {
                         clearInstruction("liveAlert");
                     }, 500);
@@ -129,6 +164,9 @@ function checkForItem(items, characters, blastRadius) {
                 case 3:
                     bombNumber += 5;
                     x5Alert();
+                    if (isVolumeOn) {
+                        itemS.play();
+                    }
                     setTimeout(() => {
                         clearInstruction("x5Alert");
                     }, 500);
@@ -136,6 +174,9 @@ function checkForItem(items, characters, blastRadius) {
                 case 4:
                     point += 5;
                     pointAlert();
+                    if (isVolumeOn) {
+                        itemS.play();
+                    }
                     setTimeout(() => {
                         clearInstruction("pointAlert");
                     }, 500);
@@ -144,6 +185,9 @@ function checkForItem(items, characters, blastRadius) {
                     if (Math.random() <= 0.4 ) {
                         live += 2;
                         mysteryAlertA();
+                        if (isVolumeOn) {
+                            itemS.play();
+                        }
                     } else {
                         live -= 1;
                         mysteryAlertB();
@@ -158,6 +202,9 @@ function checkForItem(items, characters, blastRadius) {
                     break;
                 case 6:
                     enemyKill += 5;
+                    if (isVolumeOn) {
+                        itemS.play();
+                    }
                     starAlert();
                     setTimeout(() => {
                         clearInstruction("starAlert");
@@ -165,6 +212,9 @@ function checkForItem(items, characters, blastRadius) {
                     break;
                 case 7:
                     specialTree += 5;
+                    if (isVolumeOn) {
+                        itemS.play();
+                    }
                     specialAlert();
                     setTimeout(() => {
                         clearInstruction("specialAlert");
@@ -179,6 +229,7 @@ function checkForItem(items, characters, blastRadius) {
 
             }
         }
+    }
     }
 }
 
@@ -230,6 +281,15 @@ function checkDestroyEnemy(enemies, bombPosition, blastRadius) {
         if (distance <= blastRadius) {
             enemy.destroy();
             enemies.splice(i, 1);
+            if (isVolumeOn) {
+                explosionS.play();
+                const randomDieSound = Math.floor(Math.random() * 2) + 1;
+                if (randomDieSound === 1) {
+                    dieS.play();
+                } else if (randomDieSound === 2) {
+                    dieS2.play();
+                }
+            }
             clearInterval(enemy.enemyBombInterval);
             clearInstruction("enemyInstruction");
             clearInstruction("speedAlert");
@@ -250,9 +310,13 @@ function checkDestroyBoss(bosses, bombPosition, blastRadius) {
         if (distance <= blastRadius) {
             bossLive -= 1;
             point += 20;
+            if (isVolumeOn){
+              explosionS.play();
+              dieS3.play();
+            }
         }
 
-        if (bossLive == 0) {
+        if (bossLive <= 0) {
             boss.destroy();
             bosses.splice(i, 1);
             clearInterval(boss.enemyBombInterval);

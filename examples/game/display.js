@@ -66,6 +66,11 @@ function display(enemyKill, point, bombNumber, live, targetKill, highscore) {
     const statusBarFill = document.getElementById("statusBarFill");
     if (statusBarFill) {
         statusBarFill.style.width = `${progressPercentage}%`;
+        if (progressPercentage === 100) {
+            statusBarFill.style.backgroundColor = "yellow";
+        } else {
+            statusBarFill.style.backgroundColor = "green";
+        }
     }
 }
 

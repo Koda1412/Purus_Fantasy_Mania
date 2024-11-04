@@ -20,7 +20,10 @@ function gameWin(point, enemyKill) {
     theme.pause();
     theme.currentTime = 0;
     app.off("update");
-    victory.play();
+    if (isVolumeOn) {
+        itemS.play();
+        victory.play();
+    }
     updateHighScore();
 
     const gameWinMessage = document.createElement("div");

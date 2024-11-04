@@ -1,6 +1,6 @@
 
 function createBomb(bombs, characterEntity, obstacles, enemies, bosses, items) {
-    const explosion = new Audio("../../assets/audio/explosion.mp3");
+    const explosion = new Audio("../../assets/audio/explosion.wav");
     const bomb = new pc.Entity("Bomb");
     bomb.addComponent("model", {
         type: "asset",

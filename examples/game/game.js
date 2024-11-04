@@ -210,7 +210,7 @@ function initializeGame() {
                 setTimeout(() => {
                     characterEntity.animation?.play(assets.charRunAnimationAsset.name);
                 }, 400);
-                createItem(characterEntity.getPosition().x + 2, characterEntity.getPosition().z + 2, 9, items); 
+                createItem(characterEntity.getPosition().x, characterEntity.getPosition().z, 9, items); 
                 canCreateSpecialTree = false; 
                 setTimeout(() => {
                     canCreateSpecialTree = true; 
@@ -613,11 +613,19 @@ function initializeGame() {
         };
         // --------------------------  END OF BOSS GENERATION ------------------------------------//
 
+        const phase1S = new Audio("../../assets/audio/phase1.wav");
+        const phase2S = new Audio("../../assets/audio/phase2.wav");
+        const nearlyS = new Audio("../../assets/audio/nearly.wav");
+        const finalS = new Audio("../../assets/audio/final.wav");
+
         // Set flag for spawn strong enemy
-        let hasSpawnedStrongEnemies = false;
+        let hasSpawnedStrongEnemiesAt0 = false;
+        let hasSpawnedStrongEnemiesAt8 = false;
+        let hasSpawnedStrongEnemiesAt20 = false;
         let hasSpawnedBoss = false;
  
         app.on("update", () => {
+
             if (hasSpawnedBoss) {
                 displayBoss(bossLive);
             }
@@ -632,14 +640,35 @@ function initializeGame() {
                 display(enemyKill, point, bombNumber, live, 24, highScore);
                 displaySpecial(specialTree);
             }
-            if (enemyKill == 8 && !hasSpawnedStrongEnemies || enemyKill == 20 && !hasSpawnedStrongEnemies) {
-                hasSpawnedStrongEnemies = true;
+
+            if (enemyKill >= 0 && !hasSpawnedStrongEnemiesAt0) {
+                if (isVolumeOn) {
+                    phase1S.play();
+                }
+                hasSpawnedStrongEnemiesAt0 = true;
+                spawnMultipleEnemies(1, 1, 2);
+            }
+
+            if (enemyKill >= 8 && !hasSpawnedStrongEnemiesAt8) {
+                if (isVolumeOn) {
+                    phase2S.play();
+                }
+                hasSpawnedStrongEnemiesAt8 = true;
                 spawnMultipleEnemies(1, 1, 2);
                 spawnMultipleEnemies(5, 4, 4);
                 spawnMultipleEnemies(3, 2, 1);
                 spawnMultipleEnemies(3, 3, 3);
-            } else if (enemyKill != 8 && enemyKill != 20 ) {
-                hasSpawnedStrongEnemies = false;
+            }
+            
+            if (enemyKill >= 20 && !hasSpawnedStrongEnemiesAt20) {
+                if (isVolumeOn) {
+                    nearlyS.play();
+                }
+                hasSpawnedStrongEnemiesAt20 = true;
+                spawnMultipleEnemies(1, 1, 2);
+                spawnMultipleEnemies(2, 4, 4);
+                spawnMultipleEnemies(2, 2, 1);
+                spawnMultipleEnemies(2, 3, 3);
             }
 
             if (specialTree == 0) {
@@ -653,14 +682,23 @@ function initializeGame() {
             }
             //Check spawn boss
             if (currentScene == 'scene1' && enemyKill >= 22 && !hasSpawnedBoss) {
+                if (isVolumeOn) {
+                    finalS.play();
+                }
                 hasSpawnedBoss = true;
                 spawnMultipleBosses(1);
                 bossInstruction();
             } else if (currentScene == 'scene2' && enemyKill >= 20 && !hasSpawnedBoss) {
+                if (isVolumeOn) {
+                    finalS.play();
+                }
                 hasSpawnedBoss = true;
                 spawnMultipleBosses(1);
                 bossInstruction();
             } else if (currentScene == 'scene3' && enemyKill >= 24 && !hasSpawnedBoss) {
+                if (isVolumeOn) {
+                    finalS.play();
+                }
                 hasSpawnedBoss = true;
                 spawnMultipleBosses(1);
                 bossInstruction();

@@ -1,5 +1,5 @@
 
-const over = new Audio("../../assets/audio/lose.mp3");
+const over = new Audio("../../assets/audio/loose.wav");
 
 function gameOver(enemyKill, point) {
 
@@ -22,7 +22,9 @@ function gameOver(enemyKill, point) {
     theme.pause();
     theme.currentTime = 0;
     app.off("update");
-    over.play();
+    if (isVolumeOn) {
+        over.play();
+    }
 
     updateHighScore();
     const gameOverMessage = document.createElement("div");
