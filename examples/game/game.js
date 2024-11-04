@@ -688,7 +688,7 @@ function initializeGame() {
                 hasSpawnedBoss = true;
                 spawnMultipleBosses(1);
                 bossInstruction();
-            } else if (currentScene == 'scene2' && enemyKill >= 2 && !hasSpawnedBoss) {
+            } else if (currentScene == 'scene2' && enemyKill >= 20 && !hasSpawnedBoss) {
                 if (isVolumeOn) {
                     finalS.play();
                 }
