@@ -333,7 +333,7 @@ function initializeGame() {
                             enemyBombArea.destroy();
                         }, 200); 
                 
-                        checkEnemyForDestruction(obstacles, enemyBomb.getPosition(), 10); 
+                        checkEnemyForDestruction(obstacles, enemyBomb.getPosition(), items, 10); 
                         checkDestroyCharacter(characters, enemyBomb.getPosition(), 6);
                         enemyBomb.destroy();
                     } else {

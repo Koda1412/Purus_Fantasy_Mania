@@ -32,15 +32,12 @@ function checkForDestruction(obstacles, bombPosition, blastRadius, items) {
                 t = 2;
             } else if (rand <= 0.35) {
                 t = 5;
-            } else if (rand <= 0.5) {
+            } else if (rand <= 0.55) {
                 t = 1;
-            } else if (rand <= 0.65) {
+            } else if (rand <= 0.75) {
                 t = 3;
-            }
-            else if (rand <= 0.8) {
-                t = 4;
             } else {
-                t = 8;
+                t = 4;
             }
             if (Math.random() <= 0.25 && itemCount <= 10) { 
                 createItem(obstaclePosition.x, obstaclePosition.z, t, items);
@@ -57,6 +54,7 @@ function checkForEnemy(items, enemies, blastRadius) {
     for (let i = enemies.length - 1; i >= 0; i--) {
         for (let j = items.length - 1; j >= 0; j--) {
             const enemy = enemies[i];
+            if (items[j].itemType != 8){
             const item = items[j];
             const itemPosition = item.getPosition();
             const enemyPosition = enemy.getPosition();
@@ -86,6 +84,7 @@ function checkForEnemy(items, enemies, blastRadius) {
                 }
             }
         }
+    }
     }
 }
 
@@ -233,7 +232,7 @@ function checkForItem(items, characters, blastRadius) {
     }
 }
 
-function checkEnemyForDestruction(obstacles, bombPosition, blastRadius) {
+function checkEnemyForDestruction(obstacles, bombPosition, items, blastRadius) {
     for (let i = obstacles.length - 1; i >= 0; i--) {
         const obstacle = obstacles[i];
         const obstaclePosition = obstacle.getPosition();
@@ -243,6 +242,9 @@ function checkEnemyForDestruction(obstacles, bombPosition, blastRadius) {
             obstacle.destroy();
             obstacles.splice(i, 1);
             console.log("Destroyed obstacle at", obstaclePosition);
+            if (Math.random() <= 0.5) {
+            createItem(obstaclePosition.x, obstaclePosition.z, 8, items);
+            }
         }
     }
 }
