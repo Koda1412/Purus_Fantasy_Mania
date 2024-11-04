@@ -16,6 +16,7 @@ function gameWin(point, enemyKill) {
     clearInstruction("bossInstruction");
     clearInstruction("pauseButton"); 
     clearInstruction("speedAlert"); 
+    clearInstruction("displaySpecial");
     theme.pause();
     theme.currentTime = 0;
     app.off("update");

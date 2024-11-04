@@ -18,6 +18,41 @@ function createItem(x, z, t, items) {
             itemEntity.setLocalScale(0.009, 0.009, 0.009);  
             itemEntity.setPosition(x, 1.5, z);
             break;
+        case 3:
+            chosenModel = assets.x5ModelAsset;
+            itemEntity.setLocalScale(1, 1, 1);  
+            itemEntity.setPosition(x, 1.5, z);
+            break;
+        case 4:
+            chosenModel = assets.pointModelAsset;
+            itemEntity.setLocalScale(0.3, 0.3, 0.3);  
+            itemEntity.setPosition(x, 1.5, z);
+            break;
+        case 5:
+            chosenModel = assets.mysteryModelAsset;
+            itemEntity.setLocalScale(0.8, 0.8, 0.8);  
+            itemEntity.setPosition(x, 1.5, z);
+            break;
+        case 6:
+            chosenModel = assets.starModelAsset;
+            itemEntity.setLocalScale(1, 1, 1);  
+            itemEntity.setPosition(x, 1.5, z);
+            break;
+        case 7:
+            chosenModel = assets.specialTreeModelAsset;
+            itemEntity.setLocalScale(0.008, 0.008, 0.008);  
+            itemEntity.setPosition(x, 1, z);
+            break;
+        case 8:
+            chosenModel = assets.poisionModelAsset;
+            itemEntity.setLocalScale(0.015, 0.015, 0.015);  
+            itemEntity.setPosition(x, 0, z);
+            break;
+        case 9:
+            chosenModel = assets.specialTreeModelAsset;
+            itemEntity.setLocalScale(0.01, 0.01, 0.01);  
+            itemEntity.setPosition(x, 0, z);
+            break;
         default: 
             return; 
     }

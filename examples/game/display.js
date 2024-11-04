@@ -69,6 +69,38 @@ function display(enemyKill, point, bombNumber, live, targetKill, highscore) {
     }
 }
 
+function displaySpecial(specialTree) {
+    let displaySpecial = document.getElementById("displaySpecial");
+    if (!displaySpecial && specialTree > 0) {
+        displaySpecial = document.createElement("div");
+        displaySpecial.id = "displaySpecial";
+        displaySpecial.style.position = "absolute";
+        displaySpecial.style.top = "27.5%";
+        displaySpecial.style.left = "2%";
+        displaySpecial.style.fontFamily = "fantasy";
+        displaySpecial.style.fontSize = "15px";
+        displaySpecial.style.color = "white";
+        displaySpecial.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+        displaySpecial.style.backgroundImage = "url('../../assets/image/ins.jpg')";
+        displaySpecial.style.backgroundSize = "cover";
+        displaySpecial.style.padding = "10px";
+        displaySpecial.style.borderRadius = "10px";
+        displaySpecial.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+        displaySpecial.style.zIndex = "1000";
+        document.body.appendChild(displaySpecial);
+
+        const infoTextSpecial = document.createElement("div");
+        infoTextSpecial.id = "infoTextSpecial";
+        displaySpecial.appendChild(infoTextSpecial);
+    }
+
+    const infoText = document.getElementById("infoTextSpecial");
+
+    if (infoText) {
+        infoText.innerHTML = `Number of Special Tree: ${specialTree}<br>Press P to spawn special tree, enemy chase it will die`;
+    }
+}
+
 
 
 function displayBoss(bossLive) {
@@ -146,6 +178,28 @@ function boostAlert() {
     }
 }
 
+function specialAlert() {
+    let specialAlert = document.getElementById("specialAlert");
+    if (!specialAlert) {
+    specialAlert = document.createElement("div");
+    specialAlert.id = "specialAlert";
+    specialAlert.style.position = "absolute";
+    specialAlert.style.top = "43.5%";
+    specialAlert.style.left = "37.5%";
+    specialAlert.style.fontFamily = "fantasy";
+    specialAlert.style.fontSize = "20px";
+    specialAlert.style.color = "white";
+    specialAlert.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    specialAlert.style.padding = "10px"; 
+    specialAlert.style.borderRadius = "10px";
+    specialAlert.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    specialAlert.style.backgroundSize = "cover";
+    specialAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(specialAlert);
+    specialAlert.innerHTML = `+5 Special Trees`;  
+    }
+}
+
 function liveAlert() {
     let liveAlert = document.getElementById("liveAlert");
     if (!liveAlert) {
@@ -165,6 +219,94 @@ function liveAlert() {
     liveAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
     document.body.appendChild(liveAlert);
     liveAlert.innerHTML = `+1 Live`;  
+    }
+}
+
+function mysteryAlert() {
+    let mysteryAlert = document.getElementById("mysteryAlert");
+    if (!mysteryAlert) {
+    mysteryAlert = document.createElement("div");
+    mysteryAlert.id = "mysteryAlert";
+    mysteryAlert.style.position = "absolute";
+    mysteryAlert.style.top = "43.5%";
+    mysteryAlert.style.left = "37.5%";
+    mysteryAlert.style.fontFamily = "fantasy";
+    mysteryAlert.style.fontSize = "20px";
+    mysteryAlert.style.color = "white";
+    mysteryAlert.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    mysteryAlert.style.padding = "10px"; 
+    mysteryAlert.style.borderRadius = "10px";
+    mysteryAlert.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    mysteryAlert.style.backgroundSize = "cover";
+    mysteryAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(mysteryAlert);
+    mysteryAlert.innerHTML = `+1 Live or -1 Live`;  
+    }
+}
+
+function pointAlert() {
+    let pointAlert = document.getElementById("pointAlert");
+    if (!pointAlert) {
+    pointAlert = document.createElement("div");
+    pointAlert.id = "pointAlert";
+    pointAlert.style.position = "absolute";
+    pointAlert.style.top = "43.5%";
+    pointAlert.style.left = "40%";
+    pointAlert.style.fontFamily = "fantasy";
+    pointAlert.style.fontSize = "20px";
+    pointAlert.style.color = "white";
+    pointAlert.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    pointAlert.style.padding = "10px"; 
+    pointAlert.style.borderRadius = "10px";
+    pointAlert.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    pointAlert.style.backgroundSize = "cover";
+    pointAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(pointAlert);
+    pointAlert.innerHTML = `+500 Point`;  
+    }
+}
+
+function x5Alert() {
+    let x5Alert = document.getElementById("x5Alert");
+    if (!x5Alert) {
+    x5Alert = document.createElement("div");
+    x5Alert.id = "x5Alert";
+    x5Alert.style.position = "absolute";
+    x5Alert.style.top = "43.5%";
+    x5Alert.style.left = "41%";
+    x5Alert.style.fontFamily = "fantasy";
+    x5Alert.style.fontSize = "20px";
+    x5Alert.style.color = "white";
+    x5Alert.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    x5Alert.style.padding = "10px"; 
+    x5Alert.style.borderRadius = "10px";
+    x5Alert.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    x5Alert.style.backgroundSize = "cover";
+    x5Alert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(x5Alert);
+    x5Alert.innerHTML = `+5 Bomb`;  
+    }
+}
+
+function starAlert() {
+    let starAlert = document.getElementById("starAlert");
+    if (!starAlert) {
+    starAlert = document.createElement("div");
+    starAlert.id = "starAlert";
+    starAlert.style.position = "absolute";
+    starAlert.style.top = "43.5%";
+    starAlert.style.left = "38.5%";
+    starAlert.style.fontFamily = "fantasy";
+    starAlert.style.fontSize = "20px";
+    starAlert.style.color = "white";
+    starAlert.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+    starAlert.style.padding = "10px"; 
+    starAlert.style.borderRadius = "10px";
+    starAlert.style.backgroundImage = "url('../../assets/image/ins.jpg')"; 
+    starAlert.style.backgroundSize = "cover";
+    starAlert.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
+    document.body.appendChild(starAlert);
+    starAlert.innerHTML = `+5 Enemy Kill`;  
     }
 }
 
@@ -231,7 +373,7 @@ function enemyInstruction() {
     enemyInstruction.style.backgroundSize = "cover";
     enemyInstruction.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
     document.body.appendChild(enemyInstruction);
-    enemyInstruction.innerHTML = `Avoid enemy bomb and bomb them to fill<br>the status bar to call the stage's boss`;
+    enemyInstruction.innerHTML = `Avoid enemy bomb and mushroom, bomb them to fill<br>the status bar to call the stage's boss`;
 }
 
 function moveInstructionA() {
@@ -372,7 +514,7 @@ function bossInstruction() {
     bossInstruction.style.borderRadius = "10px";
     bossInstruction.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.5)";
     document.body.appendChild(bossInstruction);
-    bossInstruction.innerHTML = `Drop bomb to kill the boss and win the stage`;
+    bossInstruction.innerHTML = `Drop bomb to kill the boss and win the stage<br> Boss can create mushroom random in map`;
 }
 
 function clearInstruction(ins) {

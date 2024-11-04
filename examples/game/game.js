@@ -3,6 +3,7 @@
 let app;
 // Default game setting
 
+let specialTree = 0;
 let itemCount = 0;
 let speed = 12.5; 
 let isPause = false;
@@ -181,6 +182,7 @@ function initializeGame() {
         const items = [];
 
         let canCreateBomb = true;
+        let canCreateSpecialTree = true;
         const bombSound = new Audio("../../assets/audio/drop_bomb.mp3");
         document.body.addEventListener("keydown", (event) => {
             if (event.code === "Space" && canCreateBomb) {
@@ -197,6 +199,21 @@ function initializeGame() {
                 canCreateBomb = false; 
                 setTimeout(() => {
                     canCreateBomb = true; 
+                }, 2000)
+            }
+            if (event.code === "KeyP" && specialTree > 0 && canCreateSpecialTree) {
+                specialTree -= 1;
+                if (isVolumeOn) {
+                    bombSound.play();
+                    }
+                characterEntity.animation?.play(assets.charAttackAnimationAsset.name);
+                setTimeout(() => {
+                    characterEntity.animation?.play(assets.charRunAnimationAsset.name);
+                }, 400);
+                createItem(characterEntity.getPosition().x + 2, characterEntity.getPosition().z + 2, 9, items); 
+                canCreateSpecialTree = false; 
+                setTimeout(() => {
+                    canCreateSpecialTree = true; 
                 }, 2000)
             }
         });
@@ -347,6 +364,7 @@ function initializeGame() {
             app.on("update", (dt) => {
                 if (isPause) return;
                 if (enemyEntity) {
+                    checkForEnemy(items, enemies, 4);
                     const playerPos = characterEntity.getPosition();
                     const enemyPos = enemyEntity.getPosition();
                     const direction = playerPos.clone().sub(enemyPos).normalize();
@@ -462,6 +480,7 @@ function initializeGame() {
             bossEntity.animation?.play(assets.charRun2AnimationAsset.name);
         
             const dropBomb = () => {
+                createRandomPoision(200, 100, 5, 50);
                 const bossBomb = new pc.Entity("BossBomb");
                 let chosenBombModel;
                 if (currentScene == "scene1") {
@@ -551,6 +570,7 @@ function initializeGame() {
             app.on("update", (dt) => {
                 if (isPause) return;
                 if (bossEntity) {
+                    checkForBoss(items, bosses, 8);
                     const playerPos = characterEntity.getPosition();
                     const enemyPos = bossEntity.getPosition();
                     const direction = playerPos.clone().sub(enemyPos).normalize();
@@ -603,10 +623,13 @@ function initializeGame() {
             // Check display
             if (currentScene == 'scene1') {
                 display(enemyKill, point, bombNumber, live, 22, highScore);
+                displaySpecial(specialTree);
             } else if (currentScene == 'scene2') {
                 display(enemyKill, point, bombNumber, live, 20, highScore);
+                displaySpecial(specialTree);
             } else if (currentScene == 'scene3') {
                 display(enemyKill, point, bombNumber, live, 24, highScore);
+                displaySpecial(specialTree);
             }
             if (enemyKill == 8 && !hasSpawnedStrongEnemies || enemyKill == 20 && !hasSpawnedStrongEnemies) {
                 hasSpawnedStrongEnemies = true;
@@ -664,7 +687,30 @@ function initializeGame() {
             
         };
 
+        const createRandomPoision = (a, b, numPoision, minDistance) => {
+            for (let i = 0; i < numPoision; i++) {
+                let x, z;
+                let attempts = 0;
+                do {
+                    x = Math.random() * a - 100;
+                    z = Math.random() * b - 50;
+                    attempts++;
+                    if (attempts > 100) break; 
+                } while (items.some(item => item.getPosition().distance(new pc.Vec3(x, 0, z)) < minDistance));
 
+                createItem(x, z, 8, items);
+            }
+            
+        };
+
+
+        //Create random poision item
+        createRandomPoision(200, 100, 20, 50);
+
+        //Create random cloud
+        createRandomObstacles(200, 100, 15, 60, 7);
+
+        //Create map base on stage
         if (currentScene == 'scene1') {
         createRandomObstacles(200, 100, 20, 30, 19);
         createRandomObstacles(200, 100, 20, 30, 10);
@@ -675,10 +721,10 @@ function initializeGame() {
         createRandomObstacles(200, 100, 30, 30, 9);
         createRandomObstacles(200, 100, 30, 30, 8);
         createRandomObstacles(200, 100, 30, 30, 3);
-        createRandomObstacles(200, 100, 15, 60, 7);
         createRandomObstacles(200, 100, 10, 30, 11);
         createRandomObstacles(200, 100, 10, 30, 5);
         createRandomObstacles(200, 100, 15, 60, 8);
+
         } else if (currentScene == 'scene2') {
         createRandomObstacles(200, 100, 20, 50, 1);
         createRandomObstacles(200, 100, 20, 50, 20);
@@ -687,7 +733,6 @@ function initializeGame() {
         createRandomObstacles(200, 100, 20, 40, 21);
         createRandomObstacles(200, 100, 20, 30, 3);
         createRandomObstacles(200, 100, 20, 40, 6);
-        createRandomObstacles(200, 100, 10, 60, 7);
         createRandomObstacles(200, 100, 10, 50, 4);
         createRandomObstacles(200, 100, 10, 50, 13);
         createRandomObstacles(200, 100, 10, 50, 12);
@@ -699,7 +744,6 @@ function initializeGame() {
         createRandomObstacles(200, 100, 20, 40, 25);
         createRandomObstacles(200, 100, 19, 30, 26);
         createRandomObstacles(200, 100, 20, 40, 27);
-        createRandomObstacles(200, 100, 10, 60, 7);
         createRandomObstacles(200, 100, 10, 50, 6);
         createRandomObstacles(200, 100, 10, 50, 21);
         createRandomObstacles(200, 100, 10, 50, 28);

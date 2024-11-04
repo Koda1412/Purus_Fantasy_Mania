@@ -14,12 +14,24 @@ function checkForDestruction(obstacles, bombPosition, blastRadius, items) {
             clearInstruction("obstaclesInstruction");
             console.log("Destroyed obstacle at", obstaclePosition);
             
-            let t = 1; 
-            if (Math.random() <= 0.2) { 
+            let rand = Math.random();
+            let t;
+            if (rand <= 0.05) {
+                t = 6;
+            } else if (rand <= 0.13) {
+                t = 7;
+            } else if (rand <= 0.23) {
                 t = 2;
+            } else if (rand <= 0.35) {
+                t = 5;
+            } else if (rand <= 0.55) {
+                t = 1;
+            } else if (rand <= 0.75) {
+                t = 3;
+            } else {
+                t = 4;
             }
-            
-            if (Math.random() <= 0.2 && itemCount <= 8) { 
+            if (Math.random() <= 0.2 && itemCount <= 10) { 
                 createItem(obstaclePosition.x, obstaclePosition.z, t, items);
                 itemCount += 1;
             }
@@ -30,6 +42,58 @@ function checkForDestruction(obstacles, bombPosition, blastRadius, items) {
     }
 }
 
+function checkForEnemy(items, enemies, blastRadius) {
+    for (let i = enemies.length - 1; i >= 0; i--) {
+        for (let j = items.length - 1; j >= 0; j--) {
+            const enemy = enemies[i];
+            const item = items[j];
+            const itemPosition = item.getPosition();
+            const enemyPosition = enemy.getPosition();
+            const distance = enemyPosition.distance(itemPosition);
+
+            if (distance <= blastRadius) {
+                item.destroy();
+                items.splice(j, 1);
+                console.log("Destroyed item at", itemPosition);
+                switch (item.itemType) {
+                    case 9: 
+                        enemy.destroy();
+                        enemies.splice(i, 1);
+                        console.log("Destroyed enemy at", itemPosition);
+                        enemyKill += 1;
+                        point += 50;
+                        break;
+                }
+            }
+        }
+    }
+}
+
+function checkForBoss(items, bosses, blastRadius) {
+    for (let i = items.length - 1; i >= 0; i--) {
+        const boss = bosses[0];
+        const item = items[i];
+        const itemPosition = item.getPosition();
+        const bossPosition = boss.getPosition();
+        const distance = bossPosition.distance(itemPosition);
+
+        if (distance <= blastRadius) {
+            item.destroy();
+            items.splice(i, 1);
+            console.log("Destroyed item at", itemPosition);
+            switch (item.itemType) {
+                case 9: 
+                    bossLive -= 0.5;
+                    point += 10;
+                    break;
+                case 7: 
+                bossLive += 0.5;
+                break;
+            }
+        }
+    }
+    
+}
 
 function checkForItem(items, characters, blastRadius) {
     for (let i = items.length - 1; i >= 0; i--) {
@@ -59,8 +123,51 @@ function checkForItem(items, characters, blastRadius) {
                     liveAlert();
                     setTimeout(() => {
                         clearInstruction("liveAlert");
+                    }, 500);
+                    break;
+                case 3:
+                    bombNumber += 5;
+                    x5Alert();
+                    setTimeout(() => {
+                        clearInstruction("x5Alert");
+                    }, 500);
+                    break;
+                case 4:
+                    point += 5;
+                    pointAlert();
+                    setTimeout(() => {
+                        clearInstruction("pointAlert");
+                    }, 500);
+                    break;
+                case 5:
+                    if (Math.random() <= 0.5 ) {
+                        live += 2;
+                    } else {
+                        live -= 1;
+                    }
+                    mysteryAlert();
+                    setTimeout(() => {
+                        clearInstruction("mysteryAlert");
                     }, 1000);
                     break;
+                case 6:
+                    enemyKill += 5;
+                    starAlert();
+                    setTimeout(() => {
+                        clearInstruction("starAlert");
+                    }, 500);
+                    break;
+                case 7:
+                    specialTree += 5;
+                    specialAlert();
+                    setTimeout(() => {
+                        clearInstruction("specialAlert");
+                    }, 500);
+                    break;
+                case 8:
+                live -= 1;
+                mainS.play();
+                break;
 
             }
         }
@@ -134,6 +241,7 @@ function checkDestroyBoss(bosses, bombPosition, blastRadius) {
 
         if (distance <= blastRadius) {
             bossLive -= 1;
+            point += 20;
         }
 
         if (bossLive == 0) {

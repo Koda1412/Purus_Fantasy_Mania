@@ -17,6 +17,7 @@ function gameOver(enemyKill, point) {
     clearInstruction("bossInstruction");
     clearInstruction("pauseButton"); 
     clearInstruction("speedAlert"); 
+    clearInstruction("displaySpecial");
     
     theme.pause();
     theme.currentTime = 0;

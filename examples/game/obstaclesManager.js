@@ -162,7 +162,11 @@ function createObstacle(x, z, t, obstacles) {
             obstacleEntity.setLocalScale(2, 2, 2); 
             obstacleEntity.setPosition(x, 0, z);
             break;
-        
+        case 31:
+            chosenModel = assets.specialTreeModelAsset;
+            obstacleEntity.setLocalScale(2, 2, 2); 
+            obstacleEntity.setPosition(x, 0, z);
+            break;
         default: 
             return; 
     }
@@ -179,7 +183,7 @@ function createObstacle(x, z, t, obstacles) {
     if (t != 1 && t != 3 && t != 4 && t != 5 && t != 6 && t != 8 && t != 9 &&
         t != 10 && t != 11 && t != 12 && t != 13 && t != 14 && t != 15 && t != 16 && t != 17
         && t!= 19 && t!= 20 && t!= 21 && t!= 22 && t!= 23 && t!= 24 && t!= 25 && t!= 26
-        && t!= 27 && t!= 28 && t!= 29 && t!= 30){
+        && t!= 27 && t!= 28 && t!= 29 && t!= 30 && t!=31 ){
     obstacleEntity.model.meshInstances.forEach(meshInstance => {
         meshInstance.material = obstacleMaterial;
     });

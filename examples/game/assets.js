@@ -33,6 +33,12 @@ const assets = {
 
     boostModelAsset: new pc.Asset("boost_model", "model", { url: "../../assets/models/boost.glb" }),
     liveModelAsset: new pc.Asset("live_model", "model", { url: "../../assets/models/live.glb" }),
+    mysteryModelAsset: new pc.Asset("mystery_model", "model", { url: "../../assets/models/mystery.glb" }),
+    x5ModelAsset: new pc.Asset("x5_model", "model", { url: "../../assets/models/x5_bomb.glb" }),
+    specialTreeModelAsset: new pc.Asset("special_model", "model", { url: "../../assets/models/special_Tree.glb" }),
+    starModelAsset: new pc.Asset("star_model", "model", { url: "../../assets/models/star.glb" }),
+    pointModelAsset: new pc.Asset("point_model", "model", { url: "../../assets/models/point.glb" }),
+    poisionModelAsset: new pc.Asset("poision_model", "model", { url: "../../assets/models/poision.glb" }),
 
     explosionBombModelAsset: new pc.Asset("explosion_bomb_model", "model", { url: "../../assets/models/explosion.glb" }),
     explosionEnemyBombModelAsset: new pc.Asset("explosion_bomb_model", "model", { url: "../../assets/models/enemy_explosion.glb" }),
